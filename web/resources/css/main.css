@@ -1,0 +1,21 @@
+body {
+	font-family: sans-serif;
+	font-size: 80%;
+	background-color: #FF00FF;
+}
+
+#header {
+	background-color: #FFFF00;
+	border: 1px solid #333366;
+}
+
+#body {
+	border: 1px solid #003366;
+	background-color: #ffffff;
+}
+
+#footer {
+	text-align: right;
+	font-size: 0.8em;
+	font-family: sans-serif;
+}

@@ -5,12 +5,13 @@
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
 	xmlns:f="http://xmlns.jcp.org/jsf/core">
-<h:head>
-	<title>JSF sucks</title>
-</h:head>
 <h:body>
-	<h:form>
-	HELLO WORLD
-	</h:form>
+	<ui:composition template="./WEB-INF/template.xhtml">
+		<ui:define name="content">
+			<h1>I am Death, destroyer of worlds</h1>
+Indeed he is.
+
+</ui:define>
+	</ui:composition>
 </h:body>
 </html>
