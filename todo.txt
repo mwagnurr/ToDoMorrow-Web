@@ -1,0 +1,6 @@
+
+-create database schema (all tables, relations, etc)
+-generate entities
+-basic database connection with user input
+
+-layout and design of template.xhtml (corresponding to it index.xhtml/others)
