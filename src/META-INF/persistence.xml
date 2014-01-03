@@ -4,6 +4,8 @@
 	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
 	<persistence-unit name="ToDoMorrow" transaction-type="JTA">
 		<jta-data-source>jdbc/todomorrow</jta-data-source>
+
 		<class>com.lnu.web.todomorrow.model.User</class>
+
 	</persistence-unit>
 </persistence>

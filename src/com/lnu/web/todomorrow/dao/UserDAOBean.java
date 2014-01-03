@@ -24,7 +24,7 @@ public class UserDAOBean {
 	}
 
 	public List<User> getAllUsers() {
-		TypedQuery<User> theQuery = em.createQuery("select p from Planets p", User.class);
+		TypedQuery<User> theQuery = em.createQuery("select u from User u", User.class);
 		List<User> result = theQuery.getResultList();
 		return result;
 	}

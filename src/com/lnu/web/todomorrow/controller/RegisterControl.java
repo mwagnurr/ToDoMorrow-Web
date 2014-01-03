@@ -31,6 +31,16 @@ public class RegisterControl {
 		
 		return userDAO.getAllUsers();
 	}
+
+	public boolean isRegistrationsuccess() {
+		return registrationsuccess;
+	}
+
+	public void setRegistrationsuccess(boolean registrationsuccess) {
+		this.registrationsuccess = registrationsuccess;
+	}
+	
+	
 	
 
 }
