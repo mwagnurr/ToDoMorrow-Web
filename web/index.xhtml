@@ -7,10 +7,15 @@
 	xmlns:f="http://xmlns.jcp.org/jsf/core">
 <h:body>
 	<ui:composition template="./WEB-INF/template.xhtml">
+
+		<ui:define name="navigation">
+			<ul>
+				<li><h:link value="#{msg.register}" outcome="register" /></li>
+			</ul>
+		</ui:define>
 		<ui:define name="content">
 			<h1>I am Death, destroyer of worlds</h1>
 			
-Indeed he is.
 
 Users:
 

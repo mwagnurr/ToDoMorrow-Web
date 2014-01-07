@@ -29,4 +29,31 @@ public class UserDAOBean {
 		return result;
 	}
 
+	public void persistUser(User user) {
+
+		if (checkUserUniqueFieldsContained(user)) {
+			System.out.println("user email or username already in database!");
+			return;
+		}
+
+		em.persist(user);
+	}
+
+	private boolean checkUserUniqueFieldsContained(User user) {
+		String query = "select u from User u where ";
+
+		query += "u.username='" + user.getUsername() + "' ";
+		query += "or u.email='" + user.getEmail() + "'";
+
+		TypedQuery<User> theQuery = em.createQuery(query, User.class);
+		List<User> result = theQuery.getResultList();
+
+		if (result.size() >= 1) {
+			return true;
+		} else {
+			return false;
+		}
+
+	}
+
 }
