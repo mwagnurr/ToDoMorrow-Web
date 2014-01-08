@@ -3,35 +3,34 @@ package com.lnu.web.todomorrow.model;
 import java.io.Serializable;
 import javax.persistence.*;
 
-
 /**
  * The persistent class for the user database table.
  * 
  */
 @Entity
-@Table(name="user")
-@NamedQuery(name="User.findAll", query="SELECT u FROM User u")
+@Table(name = "user")
+@NamedQuery(name = "User.findAll", query = "SELECT u FROM User u")
 public class User implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(unique=true, nullable=false)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(unique = true, nullable = false)
 	private int iduser;
 
-	@Column(nullable=false, length=45)
+	@Column(nullable = false, length = 45)
 	private String email;
 
-	@Column(length=45)
+	@Column(length = 45)
 	private String firstname;
 
-	@Column(length=45)
+	@Column(length = 45)
 	private String lastname;
-	
-	@Column(nullable=false, length=45)
+
+	@Column(nullable = false, length = 45)
 	private String password;
 
-	@Column(nullable=false, length=45)
+	@Column(nullable = false, length = 45)
 	private String username;
 
 	public User() {
@@ -83,6 +82,13 @@ public class User implements Serializable {
 
 	public void setUsername(String username) {
 		this.username = username;
+	}
+
+	@Override
+	public String toString() {
+		return "User [iduser=" + iduser + ", email=" + email + ", firstname=" + firstname
+				+ ", lastname=" + lastname + ", password=" + password + ", username=" + username
+				+ "]";
 	}
 
 }

@@ -37,9 +37,9 @@ public class RegisterControl {
 		System.out.println("TEST - registering called!");
 		userDAO.persistUser(newUser);
 
-		// if (success == true) {
-		registrationsuccess = true;
-		// }
+		if (userDAO.checkUserContained(newUser.getIduser())) {
+			registrationsuccess = true;
+		}
 		return "register";
 	}
 

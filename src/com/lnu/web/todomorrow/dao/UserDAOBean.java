@@ -10,9 +10,7 @@ import javax.persistence.TypedQuery;
 
 import com.lnu.web.todomorrow.model.User;
 
-/**
- * Session Bean implementation class UserDAOBean
- */
+
 @Stateless
 @LocalBean
 public class UserDAOBean {
@@ -24,8 +22,11 @@ public class UserDAOBean {
 	}
 
 	public List<User> getAllUsers() {
-		TypedQuery<User> theQuery = em.createQuery("select u from User u", User.class);
-		List<User> result = theQuery.getResultList();
+		// TypedQuery<User> theQuery = em.createQuery("select u from User u", User.class);
+		TypedQuery<User> query = em.createNamedQuery("User.findAll", User.class);
+
+		List<User> result = query.getResultList();
+		log("got all users, result size: " + result.size());
 		return result;
 	}
 
@@ -37,6 +38,8 @@ public class UserDAOBean {
 		}
 
 		em.persist(user);
+		log("persisted user: " + user.toString());
+
 	}
 
 	private boolean checkUserUniqueFieldsContained(User user) {
@@ -53,7 +56,25 @@ public class UserDAOBean {
 		} else {
 			return false;
 		}
+	}
 
+	public boolean checkUserContained(int userId) {
+
+		String query = "select u from User u where u.iduser='" + userId + "'";
+
+		TypedQuery<User> theQuery = em.createQuery(query, User.class);
+		List<User> result = theQuery.getResultList();
+		if (result.size() >= 1) {
+			log("checkUser - found " + result.size() + " results, with userId: " + userId);
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	private void log(String logMsg) {
+		String TAG = UserDAOBean.class.getSimpleName() + ": ";
+		System.out.println(TAG + logMsg);
 	}
 
 }
