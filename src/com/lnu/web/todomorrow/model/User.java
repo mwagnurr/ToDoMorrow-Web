@@ -24,6 +24,9 @@ public class User implements Serializable {
 	@Column(length = 45)
 	private String firstname;
 
+	@Column(name = "is_admin")
+	private byte isAdmin;
+
 	@Column(length = 45)
 	private String lastname;
 
@@ -60,6 +63,14 @@ public class User implements Serializable {
 		this.firstname = firstname;
 	}
 
+	public byte getIsAdmin() {
+		return this.isAdmin;
+	}
+
+	public void setIsAdmin(byte isAdmin) {
+		this.isAdmin = isAdmin;
+	}
+
 	public String getLastname() {
 		return this.lastname;
 	}
@@ -87,8 +98,8 @@ public class User implements Serializable {
 	@Override
 	public String toString() {
 		return "User [iduser=" + iduser + ", email=" + email + ", firstname=" + firstname
-				+ ", lastname=" + lastname + ", password=" + password + ", username=" + username
-				+ "]";
+				+ ", isAdmin=" + isAdmin + ", lastname=" + lastname + ", password=" + password
+				+ ", username=" + username + "]";
 	}
 
 }
