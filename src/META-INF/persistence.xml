@@ -6,6 +6,8 @@
 		<jta-data-source>jdbc/todomorrow</jta-data-source>
 
 		<class>com.lnu.web.todomorrow.model.User</class>
+		<class>com.lnu.web.todomorrow.model.Goal</class>
+		<class>com.lnu.web.todomorrow.model.Task</class>
 
 	</persistence-unit>
 </persistence>
