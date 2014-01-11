@@ -5,12 +5,12 @@ body {
 }
 
 #header {
-	background-color: #FFFF00;
-	border: 1px solid #333366;
+	color: #FFFFFF; 
+	/*border: 1px solid #333366;*/
 }
 
 #body {
-	border: 1px solid #003366;
+	/*border: 1px solid #003366;*/
 	background-color: #ffffff;
 }
 
