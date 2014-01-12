@@ -5,17 +5,35 @@ body {
 }
 
 #header {
-	color: #FFFFFF; 
+	color: #FFFFFF;
+	font-size: 25px; 
+	
 	/*border: 1px solid #333366;*/
 }
 
 #body {
 	/*border: 1px solid #003366;*/
-	background-color: #ffffff;
+	/*background-color: #ffffff;*/
 }
 
 #footer {
 	text-align: right;
 	font-size: 0.8em;
 	font-family: sans-serif;
+}
+#register {
+	float: right;
+	color: red;
+	text-align: center;
+	border: 1px solid black; 
+    padding: 5px; 
+    margin-bottom: 5px;
+	width: 25%;
+	background: #CCFFFF;
+}
+li {
+	list-style-type: none;
+}
+#firstbut {
+	margin-top: 5%;
 }
