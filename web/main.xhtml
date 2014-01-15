@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
-	xmlns:p="http://primefaces.org/ui" 
+	xmlns:p="http://primefaces.org/ui"
 	xmlns:f="http://xmlns.jcp.org/jsf/core">
 <h:body>
 	<ui:composition template="./WEB-INF/template.xhtml">
@@ -41,9 +41,15 @@
 				</div>
 
 				<div id="list_main_area">
-					<ui:repeat var="mfield" value="#{MainControl.goalList}">
-						<li><h:outputText escape="false" value="#{mfield}" /></li>
-					</ui:repeat>
+					
+					test: 
+					#{mainControl.blabla()}
+					<ul>
+							<ui:repeat var="mfield" value="#{mainControl.getGoalList()}">
+								<li><h:outputText escape="false" value="#{mfield}" /> test</li>
+							</ui:repeat>
+						</ul>
+					
 				</div>
 
 				<div id="calendar">calendar</div>
