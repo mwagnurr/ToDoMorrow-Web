@@ -29,7 +29,8 @@
 			<div id="navigation">
 				<ui:insert name="navigation">
 					<ul>
-						<li><a href="#">Navigation</a></li> <!-- Register -->
+						<li><a href="#">Navigation</a></li>
+						<!-- Register -->
 					</ul>
 				</ui:insert>
 			</div>
@@ -39,17 +40,41 @@
             </ui:insert>
 
 		</div>
-		<div id="firstbut"><p align="center">
-		<img src="../resources/img/Description_Button1.jpg" width="600" height="300"></img>
-                </p></div>
-		<p><map id="Navigationn">
-            <area shape="poly" coords="113,24,211,24,233,0,137,0" href="description.html" alt="1" />
-        </map></p>
-		<div id="footer">
-			<ui:insert name="footer">
+
+		<p class="p1">
+			<a href="description.html" class="a1"><img
+				src="../resources/img/home_button1/Description_Button1c.png"
+				id="button1"
+				onmouseover="this.src='../resources/img/home_button1/Description_Button1.2.с.png';"
+				onmouseout="this.src='../resources/img/home_button1/Description_Button1c.png';"
+				onmousedown="this.src='../resources/img/home_button1/Description_Button1.3.c.png';"
+				onmouseup="this.src='../resources/img/home_button1/Description_Button1.2.c.png';" /></a>
+		</p>
+
+		<p class="p2">
+			<a href="description.html" class="a2"><img
+				src="../resources/img/home_button2/Contact_Button2c.png"
+				id="button1"
+				onmouseover="this.src='../resources/img/home_button2/Contact_Button2.2.c.png';"
+				onmouseout="this.src='../resources/img/home_button2/Contact_Button2c.png';"
+				onmousedown="this.src='../resources/img/home_button2/Contact_Button2.3.c.png';"
+				onmouseup="this.src='../resources/img/home_button2/Contact_Button2.2.c.png';" /></a>
+		</p>
+
+		<p class="p3">
+			<a href="description.html" class="a3"><img
+				src="../resources/img/home_button3/Forum_Button3c.png" id="button1"
+				onmouseover="this.src='../resources/img/home_button3/Forum_Button3.2.c.png';"
+				onmouseout="this.src='../resources/img/home_button3/Forum_Button3c.png';"
+				onmousedown="this.src='../resources/img/home_button3/Forum_Button3.3.c.png';"
+				onmouseup="this.src='../resources/img/home_button3/Forum_Button3.2.c.png';" /></a>
+		</p>
+
+		
+			<ui:insert name="footer" id="footer1">
 				<p>&copy; 2014 ToDoMorrow - Web 2.0 Programming Växjö</p>
 			</ui:insert>
-		</div>
+		
 
 	</div>
 </h:body>
