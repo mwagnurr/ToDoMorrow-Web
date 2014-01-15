@@ -49,10 +49,27 @@ li {
 	border: 0;
 }
 
+.buttons{
+	position: absolute;
+	left: 21%;
+	top: 25%;
+	
+}
+
+.test{
+	float:left;
+	padding:10px;
+}
+
+.test2{
+	clear: left;
+	padding:10px;
+}
+
 /*#button1:hover {
 	border: 10px;
 	outline: 4px outset #FFCCFF;
-}*/
+
 .p1 {
 	position: absolute;
 	left: 21%;
@@ -70,7 +87,7 @@ li {
 	left: 21%;
 	top: 55%;
 }
-
+}*/
 .a1 {
 	
 }
