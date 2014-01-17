@@ -21,7 +21,7 @@ public class Goal implements Serializable {
 	@Column(unique=true, nullable=false)
 	private int idgoal;
 
-	private byte completed;
+	private boolean completed;
 
 	@Column(name="created_at")
 	private Timestamp createdAt;
@@ -51,11 +51,11 @@ public class Goal implements Serializable {
 		this.idgoal = idgoal;
 	}
 
-	public byte getCompleted() {
+	public boolean getCompleted() {
 		return this.completed;
 	}
 
-	public void setCompleted(byte completed) {
+	public void setCompleted(boolean completed) {
 		this.completed = completed;
 	}
 
@@ -120,5 +120,14 @@ public class Goal implements Serializable {
 
 		return task;
 	}
+
+	@Override
+	public String toString() {
+		return "Goal [idgoal=" + idgoal + ", completed=" + completed + ", createdAt=" + createdAt
+				+ ", deadline=" + deadline + ", description=" + description + ", name=" + name
+				+ ", score=" + score + ", tasks=" + tasks + "]";
+	}
+	
+	
 
 }
