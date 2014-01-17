@@ -20,7 +20,7 @@ public class Task implements Serializable {
 	@Column(unique=true, nullable=false)
 	private int idtask;
 
-	private byte completed;
+	private boolean completed;
 
 	@Column(name="created_at")
 	private Timestamp createdAt;
@@ -51,11 +51,11 @@ public class Task implements Serializable {
 		this.idtask = idtask;
 	}
 
-	public byte getCompleted() {
+	public boolean getCompleted() {
 		return this.completed;
 	}
 
-	public void setCompleted(byte completed) {
+	public void setCompleted(boolean completed) {
 		this.completed = completed;
 	}
 

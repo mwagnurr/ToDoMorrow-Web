@@ -24,12 +24,20 @@ public class MainControl {
 	}
 
 	public List<Goal> getGoalList() {
-		List<Goal> bla = new ArrayList<Goal>();
-		
-		bla.add(new Goal());
-		bla.add(new Goal());
-		bla.add(new Goal());
-		return null;
+		log("getting goal list");
+		List<Goal> bla = goalDAO.getAllGoals();
+
+		return bla;
+	}
+	
+	public String blabla(){
+		log("calling BLABALAAA");
+		return "BLABLA";
+	}
+
+	private void log(String logMsg) {
+		String TAG = MainControl.class.getSimpleName() + ": ";
+		System.out.println(TAG + logMsg);
 	}
 
 }
