@@ -10,7 +10,6 @@ import javax.persistence.TypedQuery;
 
 import com.lnu.web.todomorrow.model.User;
 
-
 @Stateless
 @LocalBean
 public class UserDAOBean {
@@ -75,6 +74,33 @@ public class UserDAOBean {
 	private void log(String logMsg) {
 		String TAG = UserDAOBean.class.getSimpleName() + ": ";
 		System.out.println(TAG + logMsg);
+	}
+
+	public boolean logIn(User u) {
+		// If username and password fields are not empty
+		if ((u.getUsername() != null) && (u.getPassword() != null)) {
+			String query = "select u.password from User u where u.username='" + u.getUsername()
+					+ "'";
+
+			TypedQuery<String> theQuery = em.createQuery(query, String.class);
+			List<String> result = theQuery.getResultList(); // Put a String ...
+			log("TEST12345 : u: " + u.getUsername() + " p: " + u.getPassword());
+			if (result == null || result.isEmpty()) {
+				log("No user found!");
+				return false;
+			}
+
+			if (result.get(0).equals(u.getPassword())) {
+				log("checkUser - found " + result.toString() + " results, with username: "
+						+ u.getUsername());
+				return true;
+			} else {
+				log("Wrong password!");
+				return false;
+			}
+		}
+		log("All fields should be filled");
+		return false;
 	}
 
 }

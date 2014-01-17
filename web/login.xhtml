@@ -1,0 +1,68 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+<body>
+	<ui:composition template="./WEB-INF/template.xhtml">
+		<ui:define name="navigation">
+			<ul>
+				<li><h:link value="BACK TO THE IDNEX" outcome="index" /></li>
+			</ul>
+		</ui:define>
+		<ui:define name="content">
+			<div id="main">
+				<h2>#{msg.login}</h2>
+				<p>#{msg.filloutform}</p>
+				<h:form>
+					<h3>#{msg.logindataheader}</h3>
+					
+
+					<div class="formblock">
+
+						<p:panel id="panel" header="#{msg.login}">
+							<p:messages id="msgs" />
+
+							<h:panelGrid columns="3" cellpadding="5">
+								<h:outputText value="#{msg.username}" />
+
+								<p:inputText id="username" value="#{lc.user.username}"
+									required="true" label="#{msg.username}">
+									<f:validateLength minimum="2" />
+									<f:validateRegex pattern="[A-Za-z][A-Za-z0-9]*" />
+									<p:ajax update="msgUsername" event="keyup" />
+								</p:inputText>
+								
+								<p:message for="username" id="msgUsername" display="icon" />
+
+								<h:outputLabel for="password" value="#{msg.password}" />
+								<p:inputText id="password" value="#{lc.user.password}"
+									label="#{msg.password}" required="true">
+									<f:validateLength minimum="3" />
+									<p:ajax update="msgPassword" event="keyup" />
+								</p:inputText>
+								<p:message for="password" id="msgPassword" display="icon" />
+
+							</h:panelGrid>
+
+
+							<div id="buttons">
+								<p:commandButton value="#{msg.loginbutton}"
+									actionListener="#{lc.login()}" update="panel"
+									rendered="#{!lc.loginsuccess}" 
+									/>
+							</div>
+						</p:panel>
+
+
+					</div>
+
+
+				</h:form>
+			</div>
+		</ui:define>
+	</ui:composition>
+</body>
+</html>
