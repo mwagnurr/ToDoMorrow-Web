@@ -11,52 +11,66 @@
 
 		<ui:define name="navigation">
 			<ul>
-				<li><h:link value="BACK TO INDEX" outcome="index" /></li>
+				<li><h:link value="BACK TO INDEX" outcome="home" /></li>
 			</ul>
 		</ui:define>
 		<ui:define name="content">
-			<h1>Main-View</h1>
+			<div class="main_position">
+				<h1>Main-View</h1>
 
-			<div id="content_area">
-				<div id="list_buttons">
-					<ul>
-						<li><h:commandButton action="index"
-								image="./resources/img/mystica_Button_(with_deep).png">
-							</h:commandButton></li>
-						<li><h:commandButton action="index"
-								image="./resources/img/mystica_Button_(with_deep).png">
-							</h:commandButton></li>
-					</ul>
-				</div>
-				<div id="list_navigation">
-					<ul>
-						<li><h:commandButton action="index"
-								image="./resources/img/mystica_Button_(with_deep).png">
-							</h:commandButton></li>
+				<div id="content_area">
+					<div id="list_top_buttons">
+						<ul>
+							<li class="left"><h:commandButton action="index"
+									image="./resources/img/mystica_Button_(with_deep).png">
+								</h:commandButton></li>
+							<li class="left"><h:commandButton action="index"
+									image="./resources/img/mystica_Button_(with_deep).png">
+								</h:commandButton></li>
+						</ul>
+					</div>
+					<div class="clear" />
+					<div id="list_left_buttons">
+						<ul>
+							<li><p:commandButton value="TestTestTest1"
+									update="list_main_area" id="ajax"
+									actionListener="#{mainControl.test1()}" /></li>
+							<li><p:commandButton value="Test Button 2"
+									update="list_main_area" id="ajax"
+									actionListener="#{mainControl.test2()}" /></li>
+							<li><p:commandButton value="Test Button 3"
+									update="list_main_area" id="ajax"
+									actionListener="#{mainControl.test3()}" /></li>
 
-						<li><h:commandLink value="test" action="index" /></li>
+						</ul>
 
-					</ul>
+					</div>
 
-				</div>
+					<div id="reminder">Reminder: Lorem Ipsum is simply dummy text
+						of the printing and typesetting industry. Lorem Ipsum has been the
+						industry's standard dummy text ever since the 1500s, when an
+						unknown printer took a galley of type and scrambled it to make a
+						type specimen book. .</div>
 
-				<div id="list_main_area">
-					
-					test: 
-					#{mainControl.blabla()}
-					<ul>
+					<p:panel id="list_main_area" styleClass="list_main_area">
+						<ul>
 							<ui:repeat var="mfield" value="#{mainControl.getGoalList()}">
 								<li><h:outputText escape="false" value="#{mfield}" /> test</li>
 							</ui:repeat>
 						</ul>
-					
+					</p:panel>
+
+
+					<div class="clear" />
+					<div id="calendar">
+						<p:calendar value="#{mainControl.date}" mode="inline"
+							styleClass="calendar" />
+					</div>
+					<div class="clear" />
+
+
 				</div>
-
-				<div id="calendar">calendar</div>
-
-				<div id="reminder">reminder</div>
 			</div>
-
 		</ui:define>
 	</ui:composition>
 </h:body>

@@ -49,21 +49,79 @@ li {
 	border: 0;
 }
 
-.buttons{
-	position: absolute;
-	left: 21%;
-	top: 25%;
+.main_position {
+	/*position: relative;
+	left: 50px;*/
 	
 }
 
-.test{
-	float:left;
-	padding:10px;
+#left {
+	float: left;
+	background-color: #ece3a5;
+	padding: 5px;
+	width: 150px;
 }
 
-.test2{
+#list_top_buttons {
+	position: relative;
+	left: 200px;
+	width: 450px;
+}
+
+#list_left_buttons {
+	float: left;
+	width: 250px;
+}
+
+.list_main_area {
+	width: 80%;
+}
+
+#reminder{
+	float: right;
+	width: 250px;
+}
+.calendar{
+	float: left;
+	width: 250px;
+}
+#inlineCal{
+	
+}
+
+#right {
+	float: right;
+	background-color: #ece3a5;
+	padding: 5px;
+	width: 150px;
+}
+
+.left {
+	float: left;
+}
+
+.right {
+	float: right;
+}
+
+.clear {
 	clear: left;
-	padding:10px;
+}
+
+.buttons {
+	position: relative;
+	left: 21%;
+	top: 25%;
+}
+
+.button_left {
+	float: left;
+	padding: 10px;
+}
+
+.button_clear {
+	clear: left;
+	padding: 10px;
 }
 
 /*#button1:hover {
