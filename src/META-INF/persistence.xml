@@ -8,6 +8,8 @@
 		<class>com.lnu.web.todomorrow.model.User</class>
 		<class>com.lnu.web.todomorrow.model.Goal</class>
 		<class>com.lnu.web.todomorrow.model.Task</class>
+		<class>com.lnu.web.todomorrow.model.ForumPost</class>
+		<class>com.lnu.web.todomorrow.model.Note</class>
 
 	</persistence-unit>
 </persistence>

@@ -21,7 +21,15 @@ body {
 	/*background-color: #ffffff;*/
 	
 }
-
+#login{
+	float: right;
+	color: red;
+	text-align: center;
+	border: 1px solid black;
+	padding: 5px;
+	margin-bottom: 5px;
+	width: 75px;
+}
 #register {
 	float: right;
 	color: red;
@@ -30,7 +38,6 @@ body {
 	padding: 5px;
 	margin-bottom: 5px;
 	width: 75px;
-	background: #CCFFFF;
 }
 
 #footer1 {
