@@ -48,6 +48,14 @@ body {
 	font-family: sans-serif;
 }
 
+#head{
+	font-size: 75px;
+}
+
+#logo{
+	float: left;
+}
+
 li {
 	list-style-type: none;
 }
