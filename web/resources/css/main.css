@@ -21,7 +21,8 @@ body {
 	/*background-color: #ffffff;*/
 	
 }
-#login{
+
+#login {
 	float: right;
 	color: red;
 	text-align: center;
@@ -30,6 +31,7 @@ body {
 	margin-bottom: 5px;
 	width: 75px;
 }
+
 #register {
 	float: right;
 	color: red;
@@ -48,11 +50,11 @@ body {
 	font-family: sans-serif;
 }
 
-#head{
+#head {
 	font-size: 75px;
 }
 
-#logo{
+#logo {
 	float: left;
 }
 
@@ -62,6 +64,10 @@ li {
 
 #button1 {
 	border: 0;
+}
+
+.main_left_buttons {
+	width: 200px;
 }
 
 .main_position {
@@ -92,15 +98,17 @@ li {
 	width: 80%;
 }
 
-#reminder{
+#reminder {
 	float: right;
 	width: 250px;
 }
-.calendar{
+
+.calendar {
 	float: left;
 	width: 250px;
 }
-#inlineCal{
+
+#inlineCal {
 	
 }
 

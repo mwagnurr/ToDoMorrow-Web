@@ -7,7 +7,7 @@
 
 	<context-param>
 		<param-name>primefaces.THEME</param-name>
-		<param-value>ui-darkness</param-value>
+		<param-value>ui-lightness</param-value>
 	</context-param>
 
 

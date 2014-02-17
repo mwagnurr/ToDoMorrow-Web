@@ -18,29 +18,30 @@
 			<div class="main_position">
 				<h1>Main-View</h1>
 
-				<div id="content_area">
+				<h:form id="content_area">
 					<div id="list_top_buttons">
 						<ul>
-							<li class="left"><h:commandButton action="index"
-									image="./resources/img/mystica_Button_(with_deep).png">
-								</h:commandButton></li>
-							<li class="left"><h:commandButton action="index"
-									image="./resources/img/mystica_Button_(with_deep).png">
-								</h:commandButton></li>
+							<li class="left"><p:commandButton
+									icon="./resources/img/mystica_Button_(with_deep).png"
+									actionListener="#{mainControl.openAddGoalDialog}" ajax="false">
+
+								</p:commandButton></li>
+							<li class="left"><p:commandButton action="index">
+								</p:commandButton></li>
 						</ul>
 					</div>
 					<div class="clear" />
 					<div id="list_left_buttons">
 						<ul>
-							<li><p:commandButton value="TestTestTest1"
-									update="list_main_area" id="ajax"
-									actionListener="#{mainControl.test1()}" /></li>
-							<li><p:commandButton value="Test Button 2"
-									update="list_main_area" id="ajax2"
-									actionListener="#{mainControl.test2()}" /></li>
-							<li><p:commandButton value="Test Button 3"
-									update="list_main_area" id="ajax3"
-									actionListener="#{mainControl.test3()}" /></li>
+							<li><p:commandButton value="TestTestTest1" id="ajax"
+									styleClass="main_left_buttons" ajax="false"
+									actionListener="#{mainControl.test1}" /></li>
+							<li><p:commandButton value="Test Button 2" id="ajax2"
+									styleClass="main_left_buttons" ajax="false"
+									actionListener="#{mainControl.test2}" /></li>
+							<li><p:commandButton value="Test Button 3" id="ajax3"
+									styleClass="main_left_buttons" ajax="false"
+									actionListener="#{mainControl.test3}" /></li>
 
 						</ul>
 
@@ -52,14 +53,13 @@
 						unknown printer took a galley of type and scrambled it to make a
 						type specimen book. .</div>
 
-					<p:panel id="list_main_area" styleClass="list_main_area">
+					<div>
 						<ul>
 							<ui:repeat var="mfield" value="#{mainControl.getGoalList()}">
 								<li><h:outputText escape="false" value="#{mfield}" /> test</li>
 							</ui:repeat>
 						</ul>
-					</p:panel>
-
+					</div>
 
 					<div class="clear" />
 					<div id="calendar">
@@ -68,8 +68,8 @@
 					</div>
 					<div class="clear" />
 
+				</h:form>
 
-				</div>
 			</div>
 		</ui:define>
 	</ui:composition>

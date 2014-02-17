@@ -9,6 +9,8 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.event.ActionEvent;
 
+import org.primefaces.context.RequestContext;
+
 import com.lnu.web.todomorrow.dao.GoalDAOBean;
 import com.lnu.web.todomorrow.dao.TaskDAOBean;
 import com.lnu.web.todomorrow.model.Goal;
@@ -24,7 +26,17 @@ public class MainControl {
 
 	private Date date;
 
+	private String newGoalName;
+
 	public MainControl() {
+	}
+
+	public String getNewGoalName() {
+		return newGoalName;
+	}
+
+	public void setNewGoalName(String newGoalName) {
+		this.newGoalName = newGoalName;
 	}
 
 	public List<Goal> getGoalList() {
@@ -49,6 +61,11 @@ public class MainControl {
 
 	public void test3(ActionEvent actionEvent) {
 		log("test3 called");
+	}
+
+	public void openAddGoalDialog() {
+		log("opening add_goal_dialog.xhtml");
+		RequestContext.getCurrentInstance().openDialog("add_goal_dialog");
 	}
 
 	public Date getDate() {
