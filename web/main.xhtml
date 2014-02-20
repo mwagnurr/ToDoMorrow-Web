@@ -19,14 +19,17 @@
 				<h1>Main-View</h1>
 
 				<h:form id="content_area">
+
+
 					<div id="list_top_buttons">
 						<ul>
-							<li class="left"><p:commandButton
-									icon="./resources/img/mystica_Button_(with_deep).png"
-									actionListener="#{mainControl.openAddGoalDialog}" ajax="false">
+
+							<li class="left"><p:commandButton icon="add_icon"
+									value="Add Goal"
+									actionListener="#{mainControl.openAddGoalDialog}">
 
 								</p:commandButton></li>
-							<li class="left"><p:commandButton action="index">
+							<li class="left"><p:commandButton action="home" ajax="false">
 								</p:commandButton></li>
 						</ul>
 					</div>
@@ -53,13 +56,38 @@
 						unknown printer took a galley of type and scrambled it to make a
 						type specimen book. .</div>
 
-					<div>
-						<ul>
-							<ui:repeat var="mfield" value="#{mainControl.getGoalList()}">
-								<li><h:outputText escape="false" value="#{mfield}" /> test</li>
-							</ui:repeat>
-						</ul>
-					</div>
+
+					<h:dataTable value="#{mainControl.goalList}" var="chr"
+						styleClass="goalTable" headerClass="goalTableHeader"
+						rowClasses="goalTableOddRow,goalTableEvenRow">
+						<h:column>
+							<p:commandButton actionListener="#{mainControl.test1}"
+								id="iconOnly" icon="ui-icon-disk"
+								title="Icon Only" />
+						</h:column>
+						<h:column>
+							<f:facet name="header">
+								Name</f:facet>
+							#{chr.name}
+						</h:column>
+						<h:column>
+							<f:facet name="header">
+								Description</f:facet>
+							#{chr.description}
+						</h:column>
+						<h:column>
+							<f:facet name="header">
+								Deadline</f:facet>
+							#{chr.deadline}
+						</h:column>
+						<h:column>
+							<f:facet name="header">
+								Score</f:facet>
+							#{chr.score}
+						</h:column>
+
+					</h:dataTable>
+
 
 					<div class="clear" />
 					<div id="calendar">

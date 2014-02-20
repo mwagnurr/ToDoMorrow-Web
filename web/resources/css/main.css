@@ -32,6 +32,31 @@ body {
 	width: 75px;
 }
 
+.add_icon {
+	background-image: url(‘../img/logo.png’) !important;
+}
+
+.goalTable {
+	border-collapse: collapse;
+	border-bottom: 1px solid #000000;
+}
+
+.goalTableHeader {
+	text-align: center;
+	background: none repeat scroll 0 0 #B5B5B5;
+	border-bottom: 1px solid #000000;
+	border-top: 1px solid #000000;
+	padding: 2px;
+}
+
+.goalTableOddRow {
+	background: none repeat scroll 0 0 #FFFFFFF;
+}
+
+.goalTableEvenRow {
+	background: none repeat scroll 0 0 #D3D3FF;
+}
+
 #register {
 	float: right;
 	color: red;

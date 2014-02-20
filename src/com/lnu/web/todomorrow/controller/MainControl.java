@@ -1,10 +1,10 @@
 package com.lnu.web.todomorrow.controller;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.event.ActionEvent;
@@ -65,7 +65,10 @@ public class MainControl {
 
 	public void openAddGoalDialog() {
 		log("opening add_goal_dialog.xhtml");
+		
 		RequestContext.getCurrentInstance().openDialog("add_goal_dialog");
+		
+		log("tried to open waaat");
 	}
 
 	public Date getDate() {
