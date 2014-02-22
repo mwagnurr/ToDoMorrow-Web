@@ -20,11 +20,21 @@ public class GoalDAOBean {
 	}
 
 	public List<Goal> getAllGoals() {
-		// TypedQuery<User> theQuery = em.createQuery("select u from User u", User.class);
 		TypedQuery<Goal> query = em.createNamedQuery("Goal.findAll", Goal.class);
 
 		List<Goal> result = query.getResultList();
 		log("got all goals, result size: " + result.size());
+		return result;
+	}
+
+	public List<Goal> getAllGoals(int userId) {
+
+		log("user id is " + userId);
+
+		TypedQuery<Goal> query = em.createNamedQuery("Goal.findAllByUser", Goal.class)
+				.setParameter("userId", userId);
+		List<Goal> result = query.getResultList();
+		log("got all goals for user_id " + userId + " , result size: " + result.size());
 		return result;
 	}
 

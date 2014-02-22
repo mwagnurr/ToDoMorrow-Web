@@ -22,23 +22,31 @@ public class LoginControl {
 	@ManagedProperty(value = "#{false}")
 	private boolean loginsuccess;
 
+	@ManagedProperty(value = "#{mainControl}")
+	private MainControl mainControl;
+
 	private boolean showloginfailed;
 	private String name;
 	private String password;
 
-	// Creates a new instance of LoginControl
 	public LoginControl() {
 	}
 
 	public String login() {
 
-		System.out.println("Test Login");
+		log("Trying to log in");
+
 		if (userDAO.logIn(user) == true) {
-			System.out.println(user.getUsername() + " " + user.getPassword());
+			log(user.getUsername() + " successfully logged in");
+			showloginfailed = false;
 			loginsuccess = true;
-			
-			return "success";
-		}else{
+
+			mainControl.setLoggedInUser(userDAO.getUser(user.getUsername()));
+
+			return "main";
+		} else {
+			showloginfailed = true;
+			loginsuccess = false;
 			return "login";
 		}
 	}
@@ -46,7 +54,7 @@ public class LoginControl {
 	@PostConstruct
 	public void init() {
 		user = new User();
-		System.out.println("started and created User");
+		log("started and created User");
 	}
 
 	/**
@@ -54,6 +62,21 @@ public class LoginControl {
 	 */
 	public User getUser() {
 		return user;
+	}
+
+	/**
+	 * @return the mainControl
+	 */
+	public MainControl getMainControl() {
+		return mainControl;
+	}
+
+	/**
+	 * @param mainControl
+	 * the mainControl to set
+	 */
+	public void setMainControl(MainControl mainControl) {
+		this.mainControl = mainControl;
 	}
 
 	/**
@@ -115,5 +138,10 @@ public class LoginControl {
 
 	public void setLoginsuccess(boolean loginsuccess) {
 		this.loginsuccess = loginsuccess;
+	}
+
+	private void log(String logMsg) {
+		String TAG = LoginControl.class.getSimpleName() + ": ";
+		System.out.println(TAG + logMsg);
 	}
 }

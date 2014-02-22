@@ -3,7 +3,6 @@ package com.lnu.web.todomorrow.model;
 import java.io.Serializable;
 import javax.persistence.*;
 import java.sql.Timestamp;
-import java.util.List;
 
 
 /**
@@ -12,7 +11,10 @@ import java.util.List;
  */
 @Entity
 @Table(name="goal")
-@NamedQuery(name="Goal.findAll", query="SELECT g FROM Goal g")
+@NamedQueries({
+@NamedQuery(name="Goal.findAll", query="SELECT g FROM Goal g"),
+@NamedQuery(name="Goal.findAllByUser", query="SELECT g FROM Goal g WHERE g.userId=:userId")
+})
 public class Goal implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -36,9 +38,8 @@ public class Goal implements Serializable {
 
 	private int score;
 
-	//bi-directional many-to-one association to Task
-	@OneToMany(mappedBy="goal")
-	private List<Task> tasks;
+	@Column(name="user_id")
+	private int userId;
 
 	public Goal() {
 	}
@@ -99,35 +100,12 @@ public class Goal implements Serializable {
 		this.score = score;
 	}
 
-	public List<Task> getTasks() {
-		return this.tasks;
+	public int getUserId() {
+		return this.userId;
 	}
 
-	public void setTasks(List<Task> tasks) {
-		this.tasks = tasks;
+	public void setUserId(int userId) {
+		this.userId = userId;
 	}
-
-	public Task addTask(Task task) {
-		getTasks().add(task);
-		task.setGoal(this);
-
-		return task;
-	}
-
-	public Task removeTask(Task task) {
-		getTasks().remove(task);
-		task.setGoal(null);
-
-		return task;
-	}
-
-	@Override
-	public String toString() {
-		return "Goal [idgoal=" + idgoal + ", completed=" + completed + ", createdAt=" + createdAt
-				+ ", deadline=" + deadline + ", description=" + description + ", name=" + name
-				+ ", score=" + score + ", tasks=" + tasks + "]";
-	}
-	
-	
 
 }

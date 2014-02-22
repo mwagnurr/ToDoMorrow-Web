@@ -20,7 +20,7 @@ public class Task implements Serializable {
 	@Column(unique=true, nullable=false)
 	private int idtask;
 
-	private boolean completed;
+	private byte completed;
 
 	@Column(name="created_at")
 	private Timestamp createdAt;
@@ -30,15 +30,16 @@ public class Task implements Serializable {
 	@Column(length=100)
 	private String description;
 
+	@Column(name="goal_id")
+	private int goalId;
+
 	@Column(nullable=false, length=45)
 	private String name;
 
-	private int value;
+	@Column(name="user_id")
+	private int userId;
 
-	//bi-directional many-to-one association to Goal
-	@ManyToOne
-	@JoinColumn(name="goal_id")
-	private Goal goal;
+	private int value;
 
 	public Task() {
 	}
@@ -51,11 +52,11 @@ public class Task implements Serializable {
 		this.idtask = idtask;
 	}
 
-	public boolean getCompleted() {
+	public byte getCompleted() {
 		return this.completed;
 	}
 
-	public void setCompleted(boolean completed) {
+	public void setCompleted(byte completed) {
 		this.completed = completed;
 	}
 
@@ -83,6 +84,14 @@ public class Task implements Serializable {
 		this.description = description;
 	}
 
+	public int getGoalId() {
+		return this.goalId;
+	}
+
+	public void setGoalId(int goalId) {
+		this.goalId = goalId;
+	}
+
 	public String getName() {
 		return this.name;
 	}
@@ -91,20 +100,20 @@ public class Task implements Serializable {
 		this.name = name;
 	}
 
+	public int getUserId() {
+		return this.userId;
+	}
+
+	public void setUserId(int userId) {
+		this.userId = userId;
+	}
+
 	public int getValue() {
 		return this.value;
 	}
 
 	public void setValue(int value) {
 		this.value = value;
-	}
-
-	public Goal getGoal() {
-		return this.goal;
-	}
-
-	public void setGoal(Goal goal) {
-		this.goal = goal;
 	}
 
 }

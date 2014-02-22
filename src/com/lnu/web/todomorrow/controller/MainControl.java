@@ -4,7 +4,6 @@ import java.util.Date;
 import java.util.List;
 
 import javax.ejb.EJB;
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.event.ActionEvent;
@@ -14,6 +13,7 @@ import org.primefaces.context.RequestContext;
 import com.lnu.web.todomorrow.dao.GoalDAOBean;
 import com.lnu.web.todomorrow.dao.TaskDAOBean;
 import com.lnu.web.todomorrow.model.Goal;
+import com.lnu.web.todomorrow.model.User;
 
 @ManagedBean
 @SessionScoped
@@ -28,7 +28,17 @@ public class MainControl {
 
 	private String newGoalName;
 
+	private User loggedInUser;
+
 	public MainControl() {
+	}
+
+	public User getLoggedInUser() {
+		return loggedInUser;
+	}
+
+	public void setLoggedInUser(User loggedInUser) {
+		this.loggedInUser = loggedInUser;
 	}
 
 	public String getNewGoalName() {
@@ -41,9 +51,19 @@ public class MainControl {
 
 	public List<Goal> getGoalList() {
 		log("getting goal list");
-		List<Goal> bla = goalDAO.getAllGoals();
+		List<Goal> goals = null;
 
-		return bla;
+		if (loggedInUser == null) {
+			log("Error, no user logged in!");
+			goals = goalDAO.getAllGoals();
+
+		} else {
+			log("retrieving goals for user: " + loggedInUser.getUsername() + " userId: "
+					+ loggedInUser.getIduser());
+			goals = goalDAO.getAllGoals(loggedInUser.getIduser());
+		}
+
+		return goals;
 	}
 
 	public String blabla() {
@@ -65,9 +85,9 @@ public class MainControl {
 
 	public void openAddGoalDialog() {
 		log("opening add_goal_dialog.xhtml");
-		
+
 		RequestContext.getCurrentInstance().openDialog("add_goal_dialog");
-		
+
 		log("tried to open waaat");
 	}
 

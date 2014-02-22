@@ -29,6 +29,9 @@ public class Note implements Serializable {
 	@Column(length=45)
 	private String title;
 
+	@Column(name="user_id")
+	private int userId;
+
 	public Note() {
 	}
 
@@ -62,6 +65,14 @@ public class Note implements Serializable {
 
 	public void setTitle(String title) {
 		this.title = title;
+	}
+
+	public int getUserId() {
+		return this.userId;
+	}
+
+	public void setUserId(int userId) {
+		this.userId = userId;
 	}
 
 }

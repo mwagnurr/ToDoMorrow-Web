@@ -59,7 +59,7 @@ public class UserDAOBean {
 
 	public boolean checkUserContained(int userId) {
 
-		String query = "select u from User u where u.iduser='" + userId + "'";
+		String query = "select u from User u where u.iduser=" + userId;
 
 		TypedQuery<User> theQuery = em.createQuery(query, User.class);
 		List<User> result = theQuery.getResultList();
@@ -76,6 +76,24 @@ public class UserDAOBean {
 		System.out.println(TAG + logMsg);
 	}
 
+	public User getUser(String username) {
+
+		String query = "select u from User u where u.username='" + username + "'";
+
+		TypedQuery<User> theQuery = em.createQuery(query, User.class);
+		List<User> result = theQuery.getResultList();
+
+		if (result == null || result.isEmpty()) {
+			log("Error: no user found with username: " + username);
+			return null;
+		} else if (result.size() > 1) {
+			log("Warning: More than one users found with username: " + username);
+		}
+
+		User user = result.get(0);
+		return user;
+	}
+
 	public boolean logIn(User u) {
 		// If username and password fields are not empty
 		if ((u.getUsername() != null) && (u.getPassword() != null)) {
@@ -84,7 +102,7 @@ public class UserDAOBean {
 
 			TypedQuery<String> theQuery = em.createQuery(query, String.class);
 			List<String> result = theQuery.getResultList(); // Put a String ...
-			log("TEST12345 : u: " + u.getUsername() + " p: " + u.getPassword());
+			// log("TEST12345 : u: " + u.getUsername() + " p: " + u.getPassword());
 			if (result == null || result.isEmpty()) {
 				log("No user found!");
 				return false;

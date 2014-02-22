@@ -36,16 +36,16 @@
 								<p:message for="username" id="msgUsername" display="icon" />
 
 								<h:outputLabel for="password" value="#{msg.password}" />
-								<p:inputText id="password" value="#{rc.newUser.password}"
+								<p:password id="password" value="#{rc.newUser.password}"
 									label="#{msg.password}" required="true">
 									<f:validateLength minimum="3" />
 									<p:ajax update="msgPassword" event="keyup" />
-								</p:inputText>
+								</p:password>
 								<p:message for="password" id="msgPassword" display="icon" />
 
 								<h:outputLabel for="email" value="#{msg.email}" />
 								<p:inputText id="email" value="#{rc.newUser.email}"
-									label="#{msg.email}" required="false">
+									label="#{msg.email}" required="true">
 									<f:validateRegex
 										pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]" />
 
@@ -75,8 +75,11 @@
 									actionListener="#{rc.register}" update="panel"
 									rendered="#{!rc.registrationsuccess}" />
 							</div>
+							<h:panelGroup rendered="#{rc.registrationsuccess}">
+								<h:outputText value="#{msg.successreturntologin} " />
+								<h:link value="#{msg.login}" accesskey="l" outcome="login" />
+							</h:panelGroup>
 						</p:panel>
-
 
 					</div>
 

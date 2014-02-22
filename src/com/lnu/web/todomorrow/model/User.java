@@ -25,7 +25,7 @@ public class User implements Serializable {
 	private String firstname;
 
 	@Column(name = "is_admin")
-	private byte isAdmin;
+	private boolean isAdmin;
 
 	@Column(length = 45)
 	private String lastname;
@@ -63,11 +63,11 @@ public class User implements Serializable {
 		this.firstname = firstname;
 	}
 
-	public byte getIsAdmin() {
+	public boolean getIsAdmin() {
 		return this.isAdmin;
 	}
 
-	public void setIsAdmin(byte isAdmin) {
+	public void setIsAdmin(boolean isAdmin) {
 		this.isAdmin = isAdmin;
 	}
 
