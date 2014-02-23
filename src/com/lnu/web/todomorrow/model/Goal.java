@@ -3,43 +3,48 @@ package com.lnu.web.todomorrow.model;
 import java.io.Serializable;
 import javax.persistence.*;
 import java.sql.Timestamp;
-
+import java.util.List;
 
 /**
  * The persistent class for the goal database table.
  * 
  */
 @Entity
-@Table(name="goal")
+@Table(name = "goal")
 @NamedQueries({
-@NamedQuery(name="Goal.findAll", query="SELECT g FROM Goal g"),
-@NamedQuery(name="Goal.findAllByUser", query="SELECT g FROM Goal g WHERE g.userId=:userId")
-})
+		@NamedQuery(name = "Goal.findAll", query = "SELECT g FROM Goal g"),
+		@NamedQuery(name = "Goal.findAllByUser", query = "SELECT g FROM Goal g WHERE g.user=:user") })
 public class Goal implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(unique=true, nullable=false)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(unique = true, nullable = false)
 	private int idgoal;
 
 	private boolean completed;
 
-	@Column(name="created_at")
+	@Column(name = "created_at")
 	private Timestamp createdAt;
 
 	private Timestamp deadline;
 
-	@Column(length=100)
+	@Column(length = 100)
 	private String description;
 
-	@Column(nullable=false, length=45)
+	@Column(nullable = false, length = 45)
 	private String name;
 
 	private int score;
 
-	@Column(name="user_id")
-	private int userId;
+	// bi-directional many-to-one association to Task
+	@OneToMany(mappedBy = "goal")
+	private List<Task> tasks;
+
+	// bi-directional many-to-one association to User
+	@ManyToOne
+	@JoinColumn(name = "user_id")
+	private User user;
 
 	public Goal() {
 	}
@@ -100,12 +105,46 @@ public class Goal implements Serializable {
 		this.score = score;
 	}
 
-	public int getUserId() {
-		return this.userId;
+	public List<Task> getTasks() {
+		return this.tasks;
 	}
 
-	public void setUserId(int userId) {
-		this.userId = userId;
+	public void setTasks(List<Task> tasks) {
+		this.tasks = tasks;
+	}
+
+	public Task addTask(Task task) {
+		getTasks().add(task);
+		task.setGoal(this);
+
+		return task;
+	}
+
+	public Task removeTask(Task task) {
+		getTasks().remove(task);
+		task.setGoal(null);
+
+		return task;
+	}
+
+	public User getUser() {
+		return this.user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "Goal [idgoal=" + idgoal + ", completed=" + completed + ", createdAt=" + createdAt
+				+ ", deadline=" + deadline + ", description=" + description + ", name=" + name
+				+ ", score=" + score + ", tasks=" + tasks + ", user=" + user + "]";
 	}
 
 }

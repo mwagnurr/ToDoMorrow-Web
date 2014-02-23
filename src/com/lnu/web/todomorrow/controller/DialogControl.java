@@ -8,8 +8,11 @@ import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 
+import org.primefaces.context.RequestContext;
+
 import com.lnu.web.todomorrow.dao.GoalDAOBean;
 import com.lnu.web.todomorrow.model.Goal;
+import com.lnu.web.todomorrow.model.User;
 
 @ManagedBean
 @RequestScoped
@@ -47,16 +50,31 @@ public class DialogControl {
 		this.newGoal.setDeadline(Timestamp.valueOf(date));
 	}
 
-	public void addGoal() {
+	public String addGoal(User loggedInUser) {
+		String nav = "main";
 		log("--addGoal()");
+
 		if (newGoal == null) {
 			log("Error, cant add Goal, null");
-			return;
+			closeDialog();
+			return nav;
+		} else {
+			log("trying to add goal: " + newGoal);
 		}
 
+		if (loggedInUser == null) {
+			log("Error, no user is logged in!");
+			closeDialog();
+			return nav;
+		}
+		log("loggedInUser: " + loggedInUser.getUsername() + ", userid: " + loggedInUser.getIduser());
+
+		newGoal.setUser(loggedInUser);
+		
 		if (newGoal.getName() == null || newGoal.getName().isEmpty()) {
 			log("Error, goal name is empty; do not add goal!");
-			return;
+			// TODO display message
+			return nav;
 		}
 
 		if (deadline != null) {
@@ -69,12 +87,21 @@ public class DialogControl {
 		log("persisting goal: " + newGoal);
 
 		goalDAO.persistGoal(newGoal);
+
+		closeDialog();
+
+		return nav;
+	}
+
+	private void closeDialog() {
+		RequestContext rc = RequestContext.getCurrentInstance();
+		rc.execute("add_dlg.hide()");
 	}
 
 	@PostConstruct
 	public void init() {
 		newGoal = new Goal();
-		log("started and created newGoal object for preparation");
+		log("started and created newGoal object for preparation, goal: " + newGoal);
 	}
 
 	private void log(String logMsg) {

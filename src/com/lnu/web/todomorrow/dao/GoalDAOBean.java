@@ -9,6 +9,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
 import com.lnu.web.todomorrow.model.Goal;
+import com.lnu.web.todomorrow.model.User;
 
 @Stateless
 @LocalBean
@@ -27,26 +28,26 @@ public class GoalDAOBean {
 		return result;
 	}
 
-	public List<Goal> getAllGoals(int userId) {
+	public List<Goal> getAllGoals(User user) {
 
-		log("user id is " + userId);
+		log("getting all goals, user is " + user);
 
 		TypedQuery<Goal> query = em.createNamedQuery("Goal.findAllByUser", Goal.class)
-				.setParameter("userId", userId);
+				.setParameter("user", user);
 		List<Goal> result = query.getResultList();
-		log("got all goals for user_id " + userId + " , result size: " + result.size());
+		log("got all goals for user_id " + user.getIduser() + " , result size: " + result.size());
 		return result;
 	}
 
 	public void persistGoal(Goal goal) {
 
 		if (checkGoalUniqueFieldsContained(goal)) {
-			System.out.println("Error, goal unique fields already contained in database");
+			log("Error, goal unique fields already contained in database");
 			return;
 		}
 
 		if (goal.getName() == null || goal.getName().isEmpty()) {
-			System.out.println("Error, goal name is empty or null");
+			log("Error, goal name is empty or null");
 			return;
 		}
 

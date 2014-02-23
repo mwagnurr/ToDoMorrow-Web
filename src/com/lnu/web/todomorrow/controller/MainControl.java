@@ -60,7 +60,7 @@ public class MainControl {
 		} else {
 			log("retrieving goals for user: " + loggedInUser.getUsername() + " userId: "
 					+ loggedInUser.getIduser());
-			goals = goalDAO.getAllGoals(loggedInUser.getIduser());
+			goals = goalDAO.getAllGoals(loggedInUser);
 		}
 
 		return goals;
@@ -86,7 +86,7 @@ public class MainControl {
 	public void openAddGoalDialog() {
 		log("opening add_goal_dialog.xhtml");
 
-		RequestContext.getCurrentInstance().openDialog("add_goal_dialog");
+		RequestContext.getCurrentInstance().openDialog("login");
 
 		log("tried to open waaat");
 	}

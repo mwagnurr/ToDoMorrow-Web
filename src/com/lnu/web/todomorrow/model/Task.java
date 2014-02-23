@@ -20,7 +20,7 @@ public class Task implements Serializable {
 	@Column(unique=true, nullable=false)
 	private int idtask;
 
-	private byte completed;
+	private boolean completed;
 
 	@Column(name="created_at")
 	private Timestamp createdAt;
@@ -30,16 +30,20 @@ public class Task implements Serializable {
 	@Column(length=100)
 	private String description;
 
-	@Column(name="goal_id")
-	private int goalId;
-
 	@Column(nullable=false, length=45)
 	private String name;
 
-	@Column(name="user_id")
-	private int userId;
-
 	private int value;
+
+	//bi-directional many-to-one association to Goal
+	@ManyToOne
+	@JoinColumn(name="goal_id")
+	private Goal goal;
+
+	//bi-directional many-to-one association to User
+	@ManyToOne
+	@JoinColumn(name="user_id")
+	private User user;
 
 	public Task() {
 	}
@@ -52,11 +56,11 @@ public class Task implements Serializable {
 		this.idtask = idtask;
 	}
 
-	public byte getCompleted() {
+	public boolean getCompleted() {
 		return this.completed;
 	}
 
-	public void setCompleted(byte completed) {
+	public void setCompleted(boolean completed) {
 		this.completed = completed;
 	}
 
@@ -84,14 +88,6 @@ public class Task implements Serializable {
 		this.description = description;
 	}
 
-	public int getGoalId() {
-		return this.goalId;
-	}
-
-	public void setGoalId(int goalId) {
-		this.goalId = goalId;
-	}
-
 	public String getName() {
 		return this.name;
 	}
@@ -100,20 +96,38 @@ public class Task implements Serializable {
 		this.name = name;
 	}
 
-	public int getUserId() {
-		return this.userId;
-	}
-
-	public void setUserId(int userId) {
-		this.userId = userId;
-	}
-
 	public int getValue() {
 		return this.value;
 	}
 
 	public void setValue(int value) {
 		this.value = value;
+	}
+
+	public Goal getGoal() {
+		return this.goal;
+	}
+
+	public void setGoal(Goal goal) {
+		this.goal = goal;
+	}
+
+	public User getUser() {
+		return this.user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "Task [idtask=" + idtask + ", completed=" + completed + ", createdAt=" + createdAt
+				+ ", deadline=" + deadline + ", description=" + description + ", name=" + name
+				+ ", value=" + value + ", goal=" + goal + ", user=" + user + "]";
 	}
 
 }

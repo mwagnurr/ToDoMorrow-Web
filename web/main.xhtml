@@ -11,39 +11,63 @@
 
 		<ui:define name="navigation">
 			<ul>
-				<li><h:link value="BACK TO INDEX" outcome="home" /></li>
+				<li><h:link value="Home" outcome="home" /></li>
 			</ul>
 		</ui:define>
 		<ui:define name="content">
 			<div class="main_position">
 				<h1>Main-View</h1>
 
-				<h:form id="content_area">
-
+				<h:form id="test">
 
 					<div id="list_top_buttons">
 						<ul>
 
 							<li class="left"><p:commandButton icon="add_icon"
-									value="Add Goal"
-									actionListener="#{mainControl.openAddGoalDialog}">
-
+									onclick="PF('add_dlg').show()" value="Add Goal"
+									action="#{mainControl.openAddGoalDialog}">
 								</p:commandButton></li>
+
 							<li class="left"><p:commandButton action="home" ajax="false"
-							value="Add Task">
+									value="Add Task">
 								</p:commandButton></li>
 						</ul>
 					</div>
-					<div class="clear" />
+				</h:form>
+
+				<p:dialog id="add_goal_dialog" header="Login" widgetVar="add_dlg"
+					resizable="false">
+					<h:form>
+						<h:panelGrid columns="2" cellpadding="5">
+							<h:outputText value="Name: " />
+							<p:inputText id="goalname" value="#{dialogControl.newGoal.name}"
+								required="true" label="#{msg.addgoal_name}">
+								<f:validateLength minimum="2" />
+								<f:validateRegex pattern="[A-Za-z][A-Za-z0-9]*" />
+							</p:inputText>
+
+							<h:outputText value="Deadline: " />
+							<p:calendar value="#{dialogControl.deadline}" id="popupCal" />
+
+							<p:commandButton value="Reset" type="reset" />
+							<p:commandButton value="#{msg.addgoal_submit}"
+								action="#{dialogControl.addGoal(mainControl.loggedInUser)}" 
+								update=":content_area:goalTable"/>
+
+						</h:panelGrid>
+					</h:form>
+				</p:dialog>
+				<div class="clear" />
+				<h:form id="content_area">
 					<div id="list_left_buttons">
 						<ul>
-							<li><p:commandButton value="TestTestTest1" id="ajax"
+							<li><p:commandButton value="Goal List" id="goal_list_button"
 									styleClass="main_left_buttons" ajax="false"
 									actionListener="#{mainControl.test1}" /></li>
-							<li><p:commandButton value="Test Button 2" id="ajax2"
+							<li><p:commandButton value="Task List" id="task_list_button"
 									styleClass="main_left_buttons" ajax="false"
 									actionListener="#{mainControl.test2}" /></li>
-							<li><p:commandButton value="Test Button 3" id="ajax3"
+							<li><p:commandButton value="Notes" id="note_button"
 									styleClass="main_left_buttons" ajax="false"
 									actionListener="#{mainControl.test3}" /></li>
 
@@ -58,13 +82,12 @@
 						type specimen book. .</div>
 
 
-					<h:dataTable value="#{mainControl.goalList}" var="chr"
+					<h:dataTable id="goalTable" value="#{mainControl.goalList}" var="chr"
 						styleClass="goalTable" headerClass="goalTableHeader"
 						rowClasses="goalTableOddRow,goalTableEvenRow">
 						<h:column>
 							<p:commandButton actionListener="#{mainControl.test1}"
-								id="iconOnly" icon="ui-icon-disk"
-								title="Icon Only" />
+								id="iconOnly" icon="ui-icon-disk" title="Icon Only" />
 						</h:column>
 						<h:column>
 							<f:facet name="header">

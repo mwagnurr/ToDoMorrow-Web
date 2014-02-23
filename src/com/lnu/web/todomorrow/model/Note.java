@@ -29,8 +29,10 @@ public class Note implements Serializable {
 	@Column(length=45)
 	private String title;
 
-	@Column(name="user_id")
-	private int userId;
+	//bi-directional many-to-one association to User
+	@ManyToOne
+	@JoinColumn(name="user_id")
+	private User user;
 
 	public Note() {
 	}
@@ -67,12 +69,12 @@ public class Note implements Serializable {
 		this.title = title;
 	}
 
-	public int getUserId() {
-		return this.userId;
+	public User getUser() {
+		return this.user;
 	}
 
-	public void setUserId(int userId) {
-		this.userId = userId;
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 }
