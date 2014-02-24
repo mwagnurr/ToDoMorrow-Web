@@ -23,40 +23,99 @@
 					<div id="list_top_buttons">
 						<ul>
 
-							<li class="left"><p:commandButton icon="add_icon"
+							<li class="left"><p:commandButton
 									onclick="PF('add_dlg').show()" value="Add Goal"
 									action="#{mainControl.openAddGoalDialog}">
 								</p:commandButton></li>
 
-							<li class="left"><p:commandButton action="home" ajax="false"
-									value="Add Task">
+							<li class="left"><p:commandButton
+									onclick="PF('add_task_dlg').show()" value="Add Task">
 								</p:commandButton></li>
 						</ul>
 					</div>
 				</h:form>
-
-				<p:dialog id="add_goal_dialog" header="Login" widgetVar="add_dlg"
-					resizable="false">
+				<!-- Dialog for adding goals -->
+				<p:dialog id="add_goal_dialog" header="#{msg.addgoal}"
+					widgetVar="add_dlg" resizable="false">
 					<h:form>
 						<h:panelGrid columns="2" cellpadding="5">
-							<h:outputText value="Name: " />
+							<h:outputText value="#{msg.addgoal_name}: " />
 							<p:inputText id="goalname" value="#{dialogControl.newGoal.name}"
 								required="true" label="#{msg.addgoal_name}">
-								<f:validateLength minimum="2" />
-								<f:validateRegex pattern="[A-Za-z][A-Za-z0-9]*" />
+								<f:validateLength minimum="2" maximum="44" />
+								<p:ajax update="msgGoalname" event="blur" />
 							</p:inputText>
 
-							<h:outputText value="Deadline: " />
-							<p:calendar value="#{dialogControl.deadline}" id="popupCal" />
 
-							<p:commandButton value="Reset" type="reset" />
-							<p:commandButton value="#{msg.addgoal_submit}"
-								action="#{dialogControl.addGoal(mainControl.loggedInUser)}" 
-								update=":content_area:goalTable"/>
+							<h:outputText value="#{msg.addgoal_deadline}: " />
+							<p:calendar value="#{dialogControl.deadline}" id="popupCal">
+								<f:convertDateTime pattern="dd/MM/yyyy" />
+							</p:calendar>
+
+							<p:commandButton value="#{msg.resetbutton}" type="reset" />
+							<p:commandButton value="#{msg.addgoal}"
+								action="#{dialogControl.addGoal(mainControl.loggedInUser)}"
+								update=":content_area:goalTable" />
+
 
 						</h:panelGrid>
+
+						<p:message for="goalname" id="msgGoalname" display="both" />
 					</h:form>
 				</p:dialog>
+
+				<!-- Dialog for adding tasks -->
+				<p:dialog id="add_task_dialog" header="#{msg.addtask}"
+					widgetVar="add_task_dlg" resizable="false">
+					<h:form>
+						<h:panelGrid columns="2" cellpadding="5">
+							<h:outputText value="#{msg.addtask_name}: " />
+							<p:inputText id="taskname" value="#{dialogControl.newTask.name}"
+								required="true" label="#{msg.addtask_name}">
+								<f:validateLength minimum="2" maximum="44" />
+								<p:ajax update="msgTaskname" event="blur" />
+							</p:inputText>
+
+							<h:outputText value="#{msg.addtask_description}: " />
+							<p:inputText id="taskdesc"
+								value="#{dialogControl.newTask.description}" required="false"
+								label="#{msg.addgoal_name}">
+								<f:validateLength maximum="100" />
+
+								<p:ajax update="msgTaskdesc" event="blur" />
+							</p:inputText>
+							<h:outputText value="#{msg.addtask_value}: " />
+							<p:inputText id="task_value"
+								value="#{dialogControl.newTask.value}" />
+
+							<p:spacer height="0" />
+							<p:slider for="task_value" />
+
+							<h:outputText value="#{msg.addtask_deadline}: " />
+							<p:calendar value="#{dialogControl.deadline}" id="popupCal">
+							</p:calendar>
+
+
+							<h:outputText value="#{msg.addtask_goal}: " />
+							<p:selectOneMenu value="#{dialogControl.taskGoalId}"
+								required="true">
+								<f:selectItems value="#{mainControl.goalList}" var="g"
+									itemLabel="#{g.name}" itemValue="#{g.idgoal}" />
+							</p:selectOneMenu>
+
+							<p:commandButton value="#{msg.resetbutton}" type="reset" />
+							<p:commandButton value="#{msg.addtask}"
+								action="#{dialogControl.addTask(mainControl.loggedInUser)}"
+								update=":content_area:goalTable" />
+
+						</h:panelGrid>
+
+						<p:message for="taskname" id="msgTaskname" display="both" />
+
+						<p:message for="taskdesc" id="msgTaskdesc" display="both" />
+					</h:form>
+				</p:dialog>
+
 				<div class="clear" />
 				<h:form id="content_area">
 					<div id="list_left_buttons">
@@ -75,43 +134,63 @@
 
 					</div>
 
-					<div id="reminder">Reminder: Lorem Ipsum is simply dummy text
-						of the printing and typesetting industry. Lorem Ipsum has been the
-						industry's standard dummy text ever since the 1500s, when an
-						unknown printer took a galley of type and scrambled it to make a
-						type specimen book. .</div>
+					<p:growl id="msg" />
 
-
-					<h:dataTable id="goalTable" value="#{mainControl.goalList}" var="chr"
-						styleClass="goalTable" headerClass="goalTableHeader"
-						rowClasses="goalTableOddRow,goalTableEvenRow">
-						<h:column>
-							<p:commandButton actionListener="#{mainControl.test1}"
-								id="iconOnly" icon="ui-icon-disk" title="Icon Only" />
-						</h:column>
-						<h:column>
+					<p:dataTable id="goalTable" value="#{mainControl.goalList}"
+						var="goal" styleClass="goalTable" headerClass="goalTableHeader">
+						<p:column style="width:2%">
+							<p:rowToggler />
+						</p:column>
+						<p:column style="width:63%">
 							<f:facet name="header">
 								Name</f:facet>
-							#{chr.name}
-						</h:column>
-						<h:column>
-							<f:facet name="header">
-								Description</f:facet>
-							#{chr.description}
-						</h:column>
-						<h:column>
+							#{goal.name}
+						</p:column>
+						<p:column style="width:25%">
 							<f:facet name="header">
 								Deadline</f:facet>
-							#{chr.deadline}
-						</h:column>
-						<h:column>
+
+							<h:outputText value="#{goal.deadline}">
+								<f:convertDateTime pattern="dd/MM/yyyy" />
+							</h:outputText>
+						</p:column>
+						<p:column style="width:10%">
 							<f:facet name="header">
 								Score</f:facet>
-							#{chr.score}
-						</h:column>
+							#{goal.score}
+						</p:column>
 
-					</h:dataTable>
-
+						<!-- row expansion for showing tasks -->
+						<p:rowExpansion>
+							<p:dataTable id="taskExtTable"
+								value="#{mainControl.getTaskListForGoal(goal)}" var="task"
+								headerClass="goalTableHeader">
+								<p:column style="width:5%">
+									<p:selectBooleanCheckbox value="#{task.completed}">
+										<p:ajax update=":content_area:msg, :content_area:goalTable"
+											listener="#{mainControl.addMessageForTaskChecked(task)}" />
+									</p:selectBooleanCheckbox>
+								</p:column>
+								<p:column style="width:58%">
+									<f:facet name="header">
+										Task Name</f:facet>
+									#{task.name}
+								</p:column>
+								<p:column style="width:25%">
+									<f:facet name="header">
+										Task Deadline</f:facet>
+									<h:outputText value="#{task.deadline}">
+										<f:convertDateTime pattern="dd/MM/yyyy" />
+									</h:outputText>
+								</p:column>
+								<p:column style="width:10%">
+									<f:facet name="header">
+										Task Value</f:facet>
+									#{task.value}
+								</p:column>
+							</p:dataTable>
+						</p:rowExpansion>
+					</p:dataTable>
 
 					<div class="clear" />
 					<div id="calendar">

@@ -1,48 +1,51 @@
 package com.lnu.web.todomorrow.model;
 
 import java.io.Serializable;
-import javax.persistence.*;
-import java.sql.Timestamp;
 
+import javax.persistence.*;
+
+import java.sql.Timestamp;
 
 /**
  * The persistent class for the task database table.
  * 
  */
 @Entity
-@Table(name="task")
-@NamedQuery(name="Task.findAll", query="SELECT t FROM Task t")
+@Table(name = "task")
+@NamedQueries({
+		@NamedQuery(name = "Task.findAll", query = "SELECT t FROM Task t"),
+		@NamedQuery(name = "Task.findAllByUserAndGoal", query = "SELECT t FROM Task t WHERE t.user=:user AND t.goal=:goal") })
 public class Task implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(unique=true, nullable=false)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(unique = true, nullable = false)
 	private int idtask;
 
 	private boolean completed;
 
-	@Column(name="created_at")
+	@Column(name = "created_at")
 	private Timestamp createdAt;
 
 	private Timestamp deadline;
 
-	@Column(length=100)
+	@Column(length = 100)
 	private String description;
 
-	@Column(nullable=false, length=45)
+	@Column(nullable = false, length = 45)
 	private String name;
 
 	private int value;
 
-	//bi-directional many-to-one association to Goal
+	// bi-directional many-to-one association to Goal
 	@ManyToOne
-	@JoinColumn(name="goal_id")
+	@JoinColumn(name = "goal_id")
 	private Goal goal;
 
-	//bi-directional many-to-one association to User
+	// bi-directional many-to-one association to User
 	@ManyToOne
-	@JoinColumn(name="user_id")
+	@JoinColumn(name = "user_id")
 	private User user;
 
 	public Task() {
@@ -56,8 +59,8 @@ public class Task implements Serializable {
 		this.idtask = idtask;
 	}
 
-	public boolean getCompleted() {
-		return this.completed;
+	public boolean isCompleted() {
+		return completed;
 	}
 
 	public void setCompleted(boolean completed) {
@@ -120,7 +123,9 @@ public class Task implements Serializable {
 		this.user = user;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#toString()
 	 */
 	@Override

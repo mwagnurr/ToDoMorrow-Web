@@ -39,6 +39,7 @@ body {
 .goalTable {
 	border-collapse: collapse;
 	border-bottom: 1px solid #000000;
+	width:700px;
 }
 
 .goalTableHeader {
@@ -49,13 +50,6 @@ body {
 	padding: 2px;
 }
 
-.goalTableOddRow {
-	background: none repeat scroll 0 0 #FFFFFFF;
-}
-
-.goalTableEvenRow {
-	background: none repeat scroll 0 0 #D3D3FF;
-}
 
 #register {
 	float: right;
@@ -110,7 +104,7 @@ li {
 
 #list_top_buttons {
 	position: relative;
-	left: 200px;
+	left: 210px;
 	width: 450px;
 }
 
@@ -172,28 +166,6 @@ li {
 	padding: 10px;
 }
 
-/*#button1:hover {
-	border: 10px;
-	outline: 4px outset #FFCCFF;
-
-.p1 {
-	position: absolute;
-	left: 21%;
-	top: 25%;
-}
-
-.p2 {
-	position: absolute;
-	left: 50%;
-	top: 25%;
-}
-
-.p3 {
-	position: absolute;
-	left: 21%;
-	top: 55%;
-}
-}*/
 .a1 {
 	
 }

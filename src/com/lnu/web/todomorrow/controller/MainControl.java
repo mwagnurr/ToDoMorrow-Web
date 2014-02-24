@@ -4,15 +4,19 @@ import java.util.Date;
 import java.util.List;
 
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
+import javax.faces.event.ValueChangeEvent;
 
 import org.primefaces.context.RequestContext;
 
 import com.lnu.web.todomorrow.dao.GoalDAOBean;
 import com.lnu.web.todomorrow.dao.TaskDAOBean;
 import com.lnu.web.todomorrow.model.Goal;
+import com.lnu.web.todomorrow.model.Task;
 import com.lnu.web.todomorrow.model.User;
 
 @ManagedBean
@@ -30,7 +34,17 @@ public class MainControl {
 
 	private User loggedInUser;
 
+	private boolean currTaskChanged;
+
 	public MainControl() {
+	}
+
+	public boolean isCurrTaskChanged() {
+		return currTaskChanged;
+	}
+
+	public void setCurrTaskChanged(boolean currTaskChanged) {
+		this.currTaskChanged = currTaskChanged;
 	}
 
 	public User getLoggedInUser() {
@@ -58,12 +72,88 @@ public class MainControl {
 			goals = goalDAO.getAllGoals();
 
 		} else {
-			log("retrieving goals for user: " + loggedInUser.getUsername() + " userId: "
-					+ loggedInUser.getIduser());
+			// log("retrieving goals for user: " + loggedInUser.getUsername() + " userId: "
+			// + loggedInUser.getIduser());
 			goals = goalDAO.getAllGoals(loggedInUser);
 		}
 
 		return goals;
+	}
+
+	public List<Task> getTaskListForGoal(Goal goal) {
+		log("getting task list for goal " + goal);
+		List<Task> tasks = null;
+
+		if (loggedInUser == null) {
+			log("Error, no user logged in!");
+			// tasks = taskDAO.getAllTask(loggedInUser, goal);
+
+		} else if (goal == null) {
+			log("Error, no goal for tasklist");
+		} else {
+			// log("retrieving goals for user: " + loggedInUser.getUsername() + " userId: "
+			// + loggedInUser.getIduser());
+			tasks = taskDAO.getAllTask(loggedInUser, goal);
+		}
+
+		return tasks;
+	}
+
+	public boolean toggleValue(boolean value) {
+		log("task completed is: " + value);
+		// log("(task is: " + task + ")");
+
+		return value;
+	}
+
+	public void taskCheckedChangeListener(ValueChangeEvent para) {
+		boolean check = (boolean) para.getNewValue();
+
+		log("value changed, new value: " + check);
+
+	}
+
+	public void addMessageForTaskChecked(Task task) {
+
+		log("adding Message after checking for task " + task + ", completed: " + task.isCompleted());
+
+		if (!task.isCompleted()) {
+			log("task curr unchecked, set completed");
+			task.setCompleted(true);
+
+			Goal goal = task.getGoal();
+			if (goal != null) {
+				int score = goal.getScore() + task.getValue();
+				log("updating score of goal to " + score);
+				goal.setScore(score);
+				goalDAO.updateGoal(goal);
+			} else {
+				log("errr, goal of task is null, cant update score");
+			}
+
+		} else {
+			log("task curr checked, set uncompleted");
+			task.setCompleted(false);
+
+			Goal goal = task.getGoal();
+			if (goal != null) {
+				int score = goal.getScore() - task.getValue();
+				log("updating score of goal to " + score);
+				goal.setScore(score);
+				goalDAO.updateGoal(goal);
+			} else {
+				log("errr, goal of task is null, cant update score");
+			}
+		}
+
+		// log("currTaskChanged: " + currTaskChanged);
+		// task.setCompleted(currTaskChanged);
+		taskDAO.updateTask(task);
+
+		String summary = task.isCompleted() ? "Checked Task " + task.getName() : "Unchecked Task "
+				+ task.getName();
+
+		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(summary));
 	}
 
 	public String blabla() {
@@ -86,8 +176,8 @@ public class MainControl {
 	public void openAddGoalDialog() {
 		log("opening add_goal_dialog.xhtml");
 
-		RequestContext.getCurrentInstance().openDialog("login");
-
+		// RequestContext.getCurrentInstance().openDialog("login");
+		// TODO remove
 		log("tried to open waaat");
 	}
 

@@ -1,5 +1,7 @@
 package com.lnu.web.todomorrow.dao;
 
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 
 import javax.ejb.LocalBean;
@@ -30,13 +32,36 @@ public class GoalDAOBean {
 
 	public List<Goal> getAllGoals(User user) {
 
-		log("getting all goals, user is " + user);
+		//log("getting all goals, user is " + user);
 
 		TypedQuery<Goal> query = em.createNamedQuery("Goal.findAllByUser", Goal.class)
 				.setParameter("user", user);
 		List<Goal> result = query.getResultList();
 		log("got all goals for user_id " + user.getIduser() + " , result size: " + result.size());
 		return result;
+	}
+	
+	public Goal getGoal(int goalId) {
+
+		String query = "select g from Goal g where g.idgoal=" + goalId;
+
+		TypedQuery<Goal> theQuery = em.createQuery(query, Goal.class);
+		List<Goal> result = theQuery.getResultList();
+
+		if (result == null || result.isEmpty()) {
+			log("Error: no goal found with goal id: " + goalId);
+			return null;
+		} else if (result.size() > 1) {
+			log("Warning: More than one goal found with goal id: " + goalId);
+		}
+
+		Goal goal = result.get(0);
+		return goal;
+	}
+	
+	public void updateGoal(Goal goal){
+		em.merge(goal);
+		log("updated goal " + goal);
 	}
 
 	public void persistGoal(Goal goal) {
@@ -50,6 +75,10 @@ public class GoalDAOBean {
 			log("Error, goal name is empty or null");
 			return;
 		}
+		
+		//save current time as created_at
+		Date currTime = new Date();
+		goal.setCreatedAt(new Timestamp(currTime.getTime()));
 
 		em.persist(goal);
 		log("persisted goal: " + goal.toString());
