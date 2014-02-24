@@ -27,7 +27,7 @@ public class DialogControl {
 	private Goal newGoal;
 
 	private Task newTask;
-	
+
 	private int taskGoalId;
 
 	private Date deadline;
@@ -36,7 +36,6 @@ public class DialogControl {
 
 	}
 
-	
 	/**
 	 * @return the taskGoalId
 	 */
@@ -44,14 +43,13 @@ public class DialogControl {
 		return taskGoalId;
 	}
 
-
 	/**
-	 * @param taskGoalId the taskGoalId to set
+	 * @param taskGoalId
+	 * the taskGoalId to set
 	 */
 	public void setTaskGoalId(int taskGoalId) {
 		this.taskGoalId = taskGoalId;
 	}
-
 
 	public Date getDeadline() {
 		return deadline;
@@ -175,14 +173,15 @@ public class DialogControl {
 		} else {
 			log("deadline null; no deadline");
 		}
-		
-		if(taskGoalId>0){
+
+		if (taskGoalId > 0) {
 			log("taskGoalId = " + taskGoalId);
-			
+
 			Goal goalForTask = goalDAO.getGoal(taskGoalId);
 			newTask.setGoal(goalForTask);
-		}else{
-			log("Warning, goal id is 0 or lower, therefor probably invalid. taskGoalId: " +taskGoalId);
+		} else {
+			log("Warning, goal id is 0 or lower, therefor probably invalid. taskGoalId: "
+					+ taskGoalId);
 		}
 
 		log("persisting task: " + newTask);

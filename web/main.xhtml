@@ -18,8 +18,8 @@
 			<div class="main_position">
 				<h1>Main-View</h1>
 
-				<h:form id="test">
-
+				<!-- top buttons (to start Add- dialogs)-->
+				<h:form id="top_buttons">
 					<div id="list_top_buttons">
 						<ul>
 
@@ -36,40 +36,48 @@
 				</h:form>
 				<!-- Dialog for adding goals -->
 				<p:dialog id="add_goal_dialog" header="#{msg.addgoal}"
-					widgetVar="add_dlg" resizable="false">
+					widgetVar="add_dlg" resizable="false" showEffect="fade"
+					hideEffect="explode">
 					<h:form>
 						<h:panelGrid columns="2" cellpadding="5">
-							<h:outputText value="#{msg.addgoal_name}: " />
+							<h:outputText value="#{msg.addgoal_name}*: " />
 							<p:inputText id="goalname" value="#{dialogControl.newGoal.name}"
 								required="true" label="#{msg.addgoal_name}">
 								<f:validateLength minimum="2" maximum="44" />
 								<p:ajax update="msgGoalname" event="blur" />
 							</p:inputText>
 
+							<h:outputText value="#{msg.addgoal_description}: " />
+							<p:inputText id="goaldesc"
+								value="#{dialogControl.newGoal.description}" required="false"
+								label="#{msg.addgoal_description}">
+								<f:validateLength maximum="100" />
+								<p:ajax update="msgGoaldesc" event="blur" />
+							</p:inputText>
 
 							<h:outputText value="#{msg.addgoal_deadline}: " />
-							<p:calendar value="#{dialogControl.deadline}" id="popupCal">
-								<f:convertDateTime pattern="dd/MM/yyyy" />
+							<p:calendar value="#{dialogControl.deadline}" id="popupCal"
+								pattern="dd/MM/yyyy HH:mm">
 							</p:calendar>
 
 							<p:commandButton value="#{msg.resetbutton}" type="reset" />
 							<p:commandButton value="#{msg.addgoal}"
 								action="#{dialogControl.addGoal(mainControl.loggedInUser)}"
-								update=":content_area:goalTable" />
-
-
+								update=":content_area:goalTable, :add_task_dialog" />
 						</h:panelGrid>
 
 						<p:message for="goalname" id="msgGoalname" display="both" />
+						<p:message for="goaldesc" id="msgGoaldesc" display="both" />
 					</h:form>
 				</p:dialog>
 
 				<!-- Dialog for adding tasks -->
 				<p:dialog id="add_task_dialog" header="#{msg.addtask}"
-					widgetVar="add_task_dlg" resizable="false">
+					widgetVar="add_task_dlg" resizable="false" showEffect="fade"
+					hideEffect="explode">
 					<h:form>
 						<h:panelGrid columns="2" cellpadding="5">
-							<h:outputText value="#{msg.addtask_name}: " />
+							<h:outputText value="#{msg.addtask_name}*: " />
 							<p:inputText id="taskname" value="#{dialogControl.newTask.name}"
 								required="true" label="#{msg.addtask_name}">
 								<f:validateLength minimum="2" maximum="44" />
@@ -92,7 +100,8 @@
 							<p:slider for="task_value" />
 
 							<h:outputText value="#{msg.addtask_deadline}: " />
-							<p:calendar value="#{dialogControl.deadline}" id="popupCal">
+							<p:calendar value="#{dialogControl.deadline}" id="popupCal"
+								pattern="dd/MM/yyyy HH:mm">
 							</p:calendar>
 
 
@@ -111,12 +120,13 @@
 						</h:panelGrid>
 
 						<p:message for="taskname" id="msgTaskname" display="both" />
-
 						<p:message for="taskdesc" id="msgTaskdesc" display="both" />
 					</h:form>
 				</p:dialog>
 
 				<div class="clear" />
+
+				<!-- main content area (table and left buttons) -->
 				<h:form id="content_area">
 					<div id="list_left_buttons">
 						<ul>
@@ -141,7 +151,7 @@
 						<p:column style="width:2%">
 							<p:rowToggler />
 						</p:column>
-						<p:column style="width:63%">
+						<p:column style="width:60%">
 							<f:facet name="header">
 								Name</f:facet>
 							#{goal.name}
@@ -160,6 +170,16 @@
 							#{goal.score}
 						</p:column>
 
+						<p:column style="width:3%">
+							<p:commandButton id="selectButton"
+								update=":content_area:goalDetail"
+								oncomplete="PF('goalDetailDlg').show()" icon="ui-icon-search"
+								title="View Detail">
+								<f:setPropertyActionListener value="#{goal}"
+									target="#{mainControl.selectedGoal}" />
+							</p:commandButton>
+						</p:column>
+
 						<!-- row expansion for showing tasks -->
 						<p:rowExpansion>
 							<p:dataTable id="taskExtTable"
@@ -171,7 +191,7 @@
 											listener="#{mainControl.addMessageForTaskChecked(task)}" />
 									</p:selectBooleanCheckbox>
 								</p:column>
-								<p:column style="width:58%">
+								<p:column style="width:55%">
 									<f:facet name="header">
 										Task Name</f:facet>
 									#{task.name}
@@ -188,9 +208,81 @@
 										Task Value</f:facet>
 									#{task.value}
 								</p:column>
+								<p:column style="width:5%">
+									<p:commandButton id="selectButton"
+										update=":content_area:goalDetail"
+										oncomplete="PF('taskDetailDlg').show()" icon="ui-icon-search"
+										title="View Detail">
+										<f:setPropertyActionListener value="#{task}"
+											target="#{mainControl.selectedTask}" />
+									</p:commandButton>
+								</p:column>
 							</p:dataTable>
 						</p:rowExpansion>
 					</p:dataTable>
+
+					<!-- goal detail dialog -->
+					<p:dialog header="Goal Detail" widgetVar="goalDetailDlg"
+						resizable="false" id="goalDetailDlg" showEffect="fade"
+						hideEffect="explode" modal="true">
+
+						<h:panelGrid id="goalDetail" columns="2" cellpadding="4"
+							style="margin:0 auto;">
+
+							<h:outputText value="Goal Name:" style="font-weight:bold" />
+							<h:outputText value="#{mainControl.selectedGoal.name}" />
+
+							<h:outputText value="Description:" style="font-weight:bold" />
+							<h:outputText value="#{mainControl.selectedGoal.description}" />
+
+							<h:outputText value="Deadline:" style="font-weight:bold" />
+							<h:outputText value="#{mainControl.selectedGoal.deadline}">
+								<f:convertDateTime pattern="dd/MM/yyyy HH:mm" />
+							</h:outputText>
+
+							<h:outputText value="Score:" style="font-weight:bold" />
+							<h:outputText value="#{mainControl.selectedGoal.score}" />
+
+							<h:outputText value="Created At:" style="font-weight:bold" />
+							<h:outputText value="#{mainControl.selectedGoal.createdAt}">
+								<f:convertDateTime pattern="dd/MM/yyyy HH:mm" />
+							</h:outputText>
+						</h:panelGrid>
+
+					</p:dialog>
+
+					<!-- Task Detail dialog (from expanded row) -->
+					<p:dialog header="Task Detail" widgetVar="taskDetailDlg"
+						resizable="false" id="taskDetailDlg" showEffect="fade"
+						hideEffect="explode" modal="true">
+
+						<h:panelGrid id="taskDetail" columns="2" cellpadding="4"
+							style="margin:0 auto;">
+
+							<h:outputText value="Task Name:" style="font-weight:bold" />
+							<h:outputText value="#{mainControl.selectedTask.name}" />
+
+							<h:outputText value="Description:" style="font-weight:bold" />
+							<h:outputText value="#{mainControl.selectedTask.description}" />
+
+							<h:outputText value="Deadline:" style="font-weight:bold" />
+							<h:outputText value="#{mainControl.selectedTask.deadline}">
+								<f:convertDateTime pattern="dd/MM/yyyy HH:mm" />
+							</h:outputText>
+
+							<h:outputText value="Value:" style="font-weight:bold" />
+							<h:outputText value="#{mainControl.selectedTask.value}" />
+
+							<h:outputText value="Part of Goal:" style="font-weight:bold" />
+							<h:outputText value="#{mainControl.selectedTask.goal.name}" />
+
+							<h:outputText value="Created At:" style="font-weight:bold" />
+							<h:outputText value="#{mainControl.selectedTask.createdAt}">
+								<f:convertDateTime pattern="dd/MM/yyyy HH:mm" />
+							</h:outputText>
+						</h:panelGrid>
+
+					</p:dialog>
 
 					<div class="clear" />
 					<div id="calendar">

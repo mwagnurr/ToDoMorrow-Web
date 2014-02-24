@@ -34,17 +34,26 @@ public class MainControl {
 
 	private User loggedInUser;
 
-	private boolean currTaskChanged;
+	private Goal selectedGoal;
+	private Task selectedTask;
 
 	public MainControl() {
 	}
 
-	public boolean isCurrTaskChanged() {
-		return currTaskChanged;
+	public Goal getSelectedGoal() {
+		return selectedGoal;
 	}
 
-	public void setCurrTaskChanged(boolean currTaskChanged) {
-		this.currTaskChanged = currTaskChanged;
+	public void setSelectedGoal(Goal selectedGoal) {
+		this.selectedGoal = selectedGoal;
+	}
+
+	public Task getSelectedTask() {
+		return selectedTask;
+	}
+
+	public void setSelectedTask(Task selectedTask) {
+		this.selectedTask = selectedTask;
 	}
 
 	public User getLoggedInUser() {
@@ -99,20 +108,6 @@ public class MainControl {
 		return tasks;
 	}
 
-	public boolean toggleValue(boolean value) {
-		log("task completed is: " + value);
-		// log("(task is: " + task + ")");
-
-		return value;
-	}
-
-	public void taskCheckedChangeListener(ValueChangeEvent para) {
-		boolean check = (boolean) para.getNewValue();
-
-		log("value changed, new value: " + check);
-
-	}
-
 	public void addMessageForTaskChecked(Task task) {
 
 		log("adding Message after checking for task " + task + ", completed: " + task.isCompleted());
@@ -154,11 +149,6 @@ public class MainControl {
 				+ task.getName();
 
 		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(summary));
-	}
-
-	public String blabla() {
-		log("calling BLABALAAA");
-		return "BLABLA";
 	}
 
 	public void test1(ActionEvent actionEvent) {
