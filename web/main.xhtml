@@ -11,7 +11,7 @@
 
 		<ui:define name="navigation">
 			<ul>
-				<li><h:link value="Home" outcome="home" /></li>
+				<li><h:link id="logout" value="#{msg.logout}" outcome="home" /></li>
 			</ul>
 		</ui:define>
 		<ui:define name="content">
@@ -24,12 +24,18 @@
 						<ul>
 
 							<li class="left"><p:commandButton
-									onclick="PF('add_dlg').show()" value="Add Goal"
-									action="#{mainControl.openAddGoalDialog}">
+									rendered="#{mainControl.renderedGoalList}"
+									onclick="PF('add_dlg').show()" value="Add Goal">
 								</p:commandButton></li>
 
 							<li class="left"><p:commandButton
+									rendered="#{mainControl.renderedGoalList}"
 									onclick="PF('add_task_dlg').show()" value="Add Task">
+								</p:commandButton></li>
+
+							<li class="left"><p:commandButton
+									rendered="#{mainControl.renderedNotes}"
+									onclick="PF('add_note_dlg').show()" value="Add Note">
 								</p:commandButton></li>
 						</ul>
 					</div>
@@ -124,6 +130,39 @@
 					</h:form>
 				</p:dialog>
 
+				<!-- Dialog for adding notes -->
+				<p:dialog id="add_note_dialog" header="#{msg.addnote}"
+					widgetVar="add_note_dlg" resizable="false" showEffect="fade"
+					hideEffect="explode">
+					<h:form>
+						<h:panelGrid columns="2" cellpadding="5">
+							<h:outputText value="#{msg.addnote_title}: " />
+							<p:inputText id="noteTitle"
+								value="#{dialogControl.newNote.title}" required="false"
+								label="#{msg.addnote_title}">
+								<f:validateLength maximum="44" />
+								<p:ajax update="msgNotetitle" event="blur" />
+							</p:inputText>
+
+							<h:outputText value="#{msg.addnote_content}: " />
+							<p:inputText id="noteContent"
+								value="#{dialogControl.newNote.content}" required="false"
+								label="#{msg.addnote_content}">
+								<f:validateLength maximum="300" />
+								<p:ajax update="msgNotecontent" event="blur" />
+							</p:inputText>
+
+							<p:commandButton value="#{msg.resetbutton}" type="reset" />
+							<p:commandButton value="#{msg.addnote}"
+								action="#{dialogControl.addNote(mainControl.loggedInUser)}"
+								update=":content_area" />
+						</h:panelGrid>
+
+						<p:message for="noteTitle" id="msgNotetitle" display="both" />
+						<p:message for="noteContent" id="msgNotecontent" display="both" />
+					</h:form>
+				</p:dialog>
+
 				<div class="clear" />
 
 				<!-- main content area (table and left buttons) -->
@@ -131,15 +170,13 @@
 					<div id="list_left_buttons">
 						<ul>
 							<li><p:commandButton value="Goal List" id="goal_list_button"
-									styleClass="main_left_buttons" ajax="false"
-									actionListener="#{mainControl.test1}" /></li>
-							<li><p:commandButton value="Task List" id="task_list_button"
-									styleClass="main_left_buttons" ajax="false"
-									actionListener="#{mainControl.test2}" /></li>
+									styleClass="main_left_buttons"
+									update=":top_buttons, :content_area"
+									actionListener="#{mainControl.switchToGoalList}" /></li>
 							<li><p:commandButton value="Notes" id="note_button"
-									styleClass="main_left_buttons" ajax="false"
-									actionListener="#{mainControl.test3}" /></li>
-
+									styleClass="main_left_buttons"
+									update=":top_buttons, :content_area"
+									actionListener="#{mainControl.switchToNotes}" /></li>
 						</ul>
 
 					</div>
@@ -147,11 +184,12 @@
 					<p:growl id="msg" />
 
 					<p:dataTable id="goalTable" value="#{mainControl.goalList}"
-						var="goal" styleClass="goalTable" headerClass="goalTableHeader">
+						var="goal" styleClass="goalTable" headerClass="goalTableHeader"
+						rendered="#{mainControl.renderedGoalList}">
 						<p:column style="width:2%">
 							<p:rowToggler />
 						</p:column>
-						<p:column style="width:60%">
+						<p:column style="width:57%">
 							<f:facet name="header">
 								Name</f:facet>
 							#{goal.name}
@@ -179,6 +217,7 @@
 									target="#{mainControl.selectedGoal}" />
 							</p:commandButton>
 						</p:column>
+
 
 						<!-- row expansion for showing tasks -->
 						<p:rowExpansion>
@@ -284,14 +323,35 @@
 
 					</p:dialog>
 
-					<div class="clear" />
-					<div id="calendar">
-						<p:calendar value="#{mainControl.date}" mode="inline"
-							styleClass="calendar" />
-					</div>
-					<div class="clear" />
 
+					<ul class="left">
+						<ui:repeat var="note" value="#{mainControl.getNoteList()}">
+							<li><p:panel id="notePnl" header="#{note.title}"
+									widgetVar="panel" styleClass="notePanels"
+									rendered="#{mainControl.renderedNotes}">
+
+
+									<h:outputText value="#{note.content}" />
+
+									<f:facet name="options">
+										<p:menu>
+											<p:submenu label="Settings">
+
+												<p:menuitem value="Remove" url="#" icon="ui-icon-close"
+													update=":content_area"
+													actionListener="#{mainControl.removeNote(note)}" />
+											</p:submenu>
+										</p:menu>
+									</f:facet>
+								</p:panel></li>
+						</ui:repeat>
+					</ul>
 				</h:form>
+
+			
+				<div class="clear" />
+
+
 
 			</div>
 		</ui:define>

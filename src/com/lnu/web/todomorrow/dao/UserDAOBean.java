@@ -109,7 +109,7 @@ public class UserDAOBean {
 			}
 
 			if (result.get(0).equals(u.getPassword())) {
-				log("checkUser - found " + result.toString() + " results, with username: "
+				log("checkUser - found " + result.size() + " results, with username: "
 						+ u.getUsername());
 				return true;
 			} else {
@@ -117,7 +117,6 @@ public class UserDAOBean {
 				return false;
 			}
 		}
-		log("All fields should be filled");
 		return false;
 	}
 

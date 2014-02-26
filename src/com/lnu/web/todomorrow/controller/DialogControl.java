@@ -11,8 +11,10 @@ import javax.faces.bean.RequestScoped;
 import org.primefaces.context.RequestContext;
 
 import com.lnu.web.todomorrow.dao.GoalDAOBean;
+import com.lnu.web.todomorrow.dao.NoteDAOBean;
 import com.lnu.web.todomorrow.dao.TaskDAOBean;
 import com.lnu.web.todomorrow.model.Goal;
+import com.lnu.web.todomorrow.model.Note;
 import com.lnu.web.todomorrow.model.Task;
 import com.lnu.web.todomorrow.model.User;
 
@@ -23,10 +25,12 @@ public class DialogControl {
 	private GoalDAOBean goalDAO;
 	@EJB
 	private TaskDAOBean taskDAO;
+	@EJB
+	private NoteDAOBean noteDAO;
 
 	private Goal newGoal;
-
 	private Task newTask;
+	private Note newNote;
 
 	private int taskGoalId;
 
@@ -68,6 +72,21 @@ public class DialogControl {
 	}
 
 	/**
+	 * @return the newNote
+	 */
+	public Note getNewNote() {
+		return newNote;
+	}
+
+	/**
+	 * @param newNote
+	 * the newNote to set
+	 */
+	public void setNewNote(Note newNote) {
+		this.newNote = newNote;
+	}
+
+	/**
 	 * @return the newTask
 	 */
 	public Task getNewTask() {
@@ -104,7 +123,7 @@ public class DialogControl {
 			closeAddGoalDialog();
 			return nav;
 		} else {
-			log("trying to add goal: " + newGoal);
+			//log("trying to add goal: " + newGoal);
 		}
 
 		if (loggedInUser == null) {
@@ -191,6 +210,39 @@ public class DialogControl {
 		closeAddTaskDialog();
 	}
 
+	public void addNote(User loggedInUser) {
+		log("--addNote()");
+
+		if (newNote == null) {
+			log("Error, cant add Note, null");
+			closeAddNoteDialog();
+			return;
+		} else {
+			log("trying to add note: " + newNote);
+		}
+
+		if (loggedInUser == null) {
+			log("Error, no user is logged in!");
+			closeAddNoteDialog();
+			return;
+		}
+		log("loggedInUser: " + loggedInUser.getUsername() + ", userid: " + loggedInUser.getIduser());
+
+		newNote.setUser(loggedInUser);
+
+		if (newNote.getTitle() == null || newNote.getTitle().isEmpty()) {
+			log("Error, note name is empty; do not add note!");
+			return;
+		}
+
+		log("persisting note: " + newNote);
+
+		noteDAO.persistNote(newNote);
+
+		closeAddNoteDialog();
+	}
+
+	// Dialog closing methods
 	private void closeAddGoalDialog() {
 		RequestContext rc = RequestContext.getCurrentInstance();
 		rc.execute("add_dlg.hide()");
@@ -201,11 +253,17 @@ public class DialogControl {
 		rc.execute("add_task_dlg.hide()");
 	}
 
+	private void closeAddNoteDialog() {
+		RequestContext rc = RequestContext.getCurrentInstance();
+		rc.execute("add_note_dlg.hide()");
+	}
+
 	@PostConstruct
 	public void init() {
 		newGoal = new Goal();
 		newTask = new Task();
-		log("started and created newGoal and newTask objects for preparation");
+		newNote = new Note();
+		log("started and created newGoal/newTask/newNote objects for preparation");
 	}
 
 	private void log(String logMsg) {

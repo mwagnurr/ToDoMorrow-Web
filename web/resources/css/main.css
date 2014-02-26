@@ -22,7 +22,35 @@ body {
 	
 }
 
+#homeNav {
+	color: red;
+	text-align: center;
+	border: 1px solid black;
+	padding: 5px;
+	margin-bottom: 5px;
+}
+
+#register {
+	float: right;
+	color: red;
+	text-align: center;
+	border: 1px solid black;
+	padding: 5px;
+	margin-bottom: 5px;
+	width: 75px;
+}
+
 #login {
+	float: right;
+	color: red;
+	text-align: center;
+	border: 1px solid black;
+	padding: 5px;
+	margin-bottom: 5px;
+	width: 75px;
+}
+
+#logout {
 	float: right;
 	color: red;
 	text-align: center;
@@ -39,7 +67,7 @@ body {
 .goalTable {
 	border-collapse: collapse;
 	border-bottom: 1px solid #000000;
-	width:700px;
+	width: 700px;
 }
 
 .goalTableHeader {
@@ -50,15 +78,8 @@ body {
 	padding: 2px;
 }
 
-
-#register {
-	float: right;
-	color: red;
-	text-align: center;
-	border: 1px solid black;
-	padding: 5px;
-	margin-bottom: 5px;
-	width: 75px;
+.notePanels {
+	width: 700px;
 }
 
 #footer1 {

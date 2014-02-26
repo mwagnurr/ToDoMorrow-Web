@@ -1,0 +1,35 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:body>
+	<ui:composition template="./WEB-INF/template.xhtml">
+
+		<ui:define name="navigation">
+			<ul>
+				<li><h:link id="homeNav" value="Return to Home" outcome="home" /></li>
+				<li><h:link id="login" value="#{msg.login}" outcome="login" /></li>
+				<li><h:link id="register" value="#{msg.register}"
+						outcome="register" /></li>
+			</ul>
+		</ui:define>
+		<ui:define name="content">
+			<p:outputPanel deferred="true">
+				<h3>Description of ToDoMorrow</h3>
+				<p>The project is a time management webtool to keep an organized
+					TodoList and connect with other people. Users can define Goals
+					(representing goals a person wants to achieve on a high abstraction
+					level) and add to the Goals more specific and concrete Tasks. It is
+					also possible to add and view notes which consist only of text and
+					have no other purpose than offering a way to easily store
+					information.</p>
+			</p:outputPanel>
+		</ui:define>
+
+	</ui:composition>
+</h:body>
+</html>

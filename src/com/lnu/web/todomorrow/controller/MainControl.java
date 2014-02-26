@@ -14,8 +14,10 @@ import javax.faces.event.ValueChangeEvent;
 import org.primefaces.context.RequestContext;
 
 import com.lnu.web.todomorrow.dao.GoalDAOBean;
+import com.lnu.web.todomorrow.dao.NoteDAOBean;
 import com.lnu.web.todomorrow.dao.TaskDAOBean;
 import com.lnu.web.todomorrow.model.Goal;
+import com.lnu.web.todomorrow.model.Note;
 import com.lnu.web.todomorrow.model.Task;
 import com.lnu.web.todomorrow.model.User;
 
@@ -27,6 +29,8 @@ public class MainControl {
 	private GoalDAOBean goalDAO;
 	@EJB
 	private TaskDAOBean taskDAO;
+	@EJB
+	private NoteDAOBean noteDAO;
 
 	private Date date;
 
@@ -36,6 +40,9 @@ public class MainControl {
 
 	private Goal selectedGoal;
 	private Task selectedTask;
+
+	private boolean renderedGoalList = true;
+	private boolean renderedNotes = false;
 
 	public MainControl() {
 	}
@@ -56,6 +63,22 @@ public class MainControl {
 		this.selectedTask = selectedTask;
 	}
 
+	public boolean isRenderedGoalList() {
+		return renderedGoalList;
+	}
+
+	public void setRenderedGoalList(boolean renderedGoalList) {
+		this.renderedGoalList = renderedGoalList;
+	}
+
+	public boolean isRenderedNotes() {
+		return renderedNotes;
+	}
+
+	public void setRenderedNotes(boolean renderedNotes) {
+		this.renderedNotes = renderedNotes;
+	}
+
 	public User getLoggedInUser() {
 		return loggedInUser;
 	}
@@ -70,6 +93,16 @@ public class MainControl {
 
 	public void setNewGoalName(String newGoalName) {
 		this.newGoalName = newGoalName;
+	}
+
+	public void switchToGoalList() {
+		renderedGoalList = true;
+		renderedNotes = false;
+	}
+
+	public void switchToNotes() {
+		renderedGoalList = false;
+		renderedNotes = true;
 	}
 
 	public List<Goal> getGoalList() {
@@ -87,6 +120,36 @@ public class MainControl {
 		}
 
 		return goals;
+	}
+
+	public List<Note> getNoteList() {
+		log("getting note list");
+		List<Note> notes = null;
+
+		if (loggedInUser == null) {
+			log("Error, no user logged in!");
+
+		} else {
+			notes = noteDAO.getAllNotes(loggedInUser);
+		}
+
+		return notes;
+	}
+	
+	//TODO remove
+	public void removeSelectedGoal(){
+//		if(selectedGoal==null){
+//			log("Error, goal is null");
+//			return;
+//		}
+//
+//		log("removing from database: " + selectedGoal);
+//		goalDAO.removeGoal(selectedGoal);
+	}
+	public void removeNote(Note note){
+		log("removing note " + note);
+		
+		
 	}
 
 	public List<Task> getTaskListForGoal(Goal goal) {
@@ -149,26 +212,6 @@ public class MainControl {
 				+ task.getName();
 
 		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(summary));
-	}
-
-	public void test1(ActionEvent actionEvent) {
-		log("test1 called");
-	}
-
-	public void test2(ActionEvent actionEvent) {
-		log("test2 called");
-	}
-
-	public void test3(ActionEvent actionEvent) {
-		log("test3 called");
-	}
-
-	public void openAddGoalDialog() {
-		log("opening add_goal_dialog.xhtml");
-
-		// RequestContext.getCurrentInstance().openDialog("login");
-		// TODO remove
-		log("tried to open waaat");
 	}
 
 	public Date getDate() {

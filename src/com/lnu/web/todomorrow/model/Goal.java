@@ -144,7 +144,7 @@ public class Goal implements Serializable {
 	public String toString() {
 		return "Goal [idgoal=" + idgoal + ", completed=" + completed + ", createdAt=" + createdAt
 				+ ", deadline=" + deadline + ", description=" + description + ", name=" + name
-				+ ", score=" + score + ", tasks=" + tasks + ", user=" + user + "]";
+				+ ", score=" + score + ", tasks=" + tasks + ", user=" + user.getUsername() + "]";
 	}
 
 }

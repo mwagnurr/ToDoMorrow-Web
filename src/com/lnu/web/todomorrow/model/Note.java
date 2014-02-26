@@ -1,37 +1,39 @@
 package com.lnu.web.todomorrow.model;
 
 import java.io.Serializable;
-import javax.persistence.*;
-import java.sql.Timestamp;
 
+import javax.persistence.*;
+
+import java.sql.Timestamp;
 
 /**
  * The persistent class for the note database table.
  * 
  */
 @Entity
-@Table(name="note")
-@NamedQuery(name="Note.findAll", query="SELECT n FROM Note n")
+@Table(name = "note")
+@NamedQueries({ @NamedQuery(name = "Note.findAll", query = "SELECT n FROM Note n"),
+		@NamedQuery(name = "Note.findAllByUser", query = "SELECT n FROM Note n WHERE n.user=:user") })
 public class Note implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(unique=true, nullable=false)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(unique = true, nullable = false)
 	private int idnote;
 
-	@Column(length=300)
+	@Column(length = 300)
 	private String content;
 
-	@Column(name="created_at")
+	@Column(name = "created_at")
 	private Timestamp createdAt;
 
-	@Column(length=45)
+	@Column(length = 45)
 	private String title;
 
-	//bi-directional many-to-one association to User
+	// bi-directional many-to-one association to User
 	@ManyToOne
-	@JoinColumn(name="user_id")
+	@JoinColumn(name = "user_id")
 	private User user;
 
 	public Note() {
@@ -75,6 +77,17 @@ public class Note implements Serializable {
 
 	public void setUser(User user) {
 		this.user = user;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "Note [idnote=" + idnote + ", content=" + content + ", createdAt=" + createdAt
+				+ ", title=" + title + ", user=" + user + "]";
 	}
 
 }

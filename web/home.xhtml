@@ -4,24 +4,25 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
 	xmlns:f="http://xmlns.jcp.org/jsf/core">
 <h:body>
 	<ui:composition template="./WEB-INF/template.xhtml">
+
 
 		<ui:define name="navigation">
 			<ul>
 				<li><h:link id="login" value="#{msg.login}" outcome="login" /></li>
 				<li><h:link id="register" value="#{msg.register}"
 						outcome="register" /></li>
-				<li><h:link id="main" value="Main (Debug-Link)" outcome="main" /></li>
+				<li><p:spacer height="0" /></li>
 			</ul>
 		</ui:define>
 		<ui:define name="content">
-			<!--<h1>Welcome to TODOMORROW ლ(●ↀωↀ●)ლ</h1>-->
 			<div class="buttons">
 				<div class="button_left">
-					<a href="description.html" class="a1"><img
-						src="../resources/img/home_button1/Description_Button1c.png"
+					<a href="description.xhtml" class="a1"><img
+						src="#{resource['img/home_button1/Description_Button1c.png']}"
 						id="button1"
 						onmouseover="this.src='../resources/img/home_button1/Description_Button1.2.с.png';"
 						onmouseout="this.src='../resources/img/home_button1/Description_Button1c.png';"
@@ -30,9 +31,9 @@
 				</div>
 
 				<div class="button_left">
-					<a href="description.html" class="a2"><img
-						src="../resources/img/home_button2/Contact_Button2c.png"
-						id="button1"
+					<a href="home.xhtml" class="a2"><img
+						src="#{resource['img/home_button2/Contact_Button2c.png']}"
+						id="button2"
 						onmouseover="this.src='../resources/img/home_button2/Contact_Button2.2.c.png';"
 						onmouseout="this.src='../resources/img/home_button2/Contact_Button2c.png';"
 						onmousedown="this.src='../resources/img/home_button2/Contact_Button2.3.c.png';"
@@ -40,16 +41,16 @@
 				</div>
 
 				<div class="button_clear">
-					<a href="description.html" class="a3"><img
-						src="../resources/img/home_button3/Forum_Button3c.png"
-						id="button1"
+					<a href="home.xhtml" class="a3"><img
+						src="#{resource['img/home_button3/Forum_Button3c.png']}"
+						id="button3"
 						onmouseover="this.src='../resources/img/home_button3/Forum_Button3.2.c.png';"
 						onmouseout="this.src='../resources/img/home_button3/Forum_Button3c.png';"
 						onmousedown="this.src='../resources/img/home_button3/Forum_Button3.3.c.png';"
 						onmouseup="this.src='../resources/img/home_button3/Forum_Button3.2.c.png';" /></a>
 				</div>
 
-				
+
 			</div>
 
 		</ui:define>

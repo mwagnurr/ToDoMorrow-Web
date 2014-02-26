@@ -11,6 +11,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
 import com.lnu.web.todomorrow.model.Goal;
+import com.lnu.web.todomorrow.model.Note;
 import com.lnu.web.todomorrow.model.User;
 
 @Stateless
@@ -58,7 +59,10 @@ public class GoalDAOBean {
 		Goal goal = result.get(0);
 		return goal;
 	}
-	
+	public void removeGoal(Goal goal) {
+		em.remove(goal);
+		log("removed goal " + goal);
+	}
 	public void updateGoal(Goal goal){
 		em.merge(goal);
 		log("updated goal " + goal);

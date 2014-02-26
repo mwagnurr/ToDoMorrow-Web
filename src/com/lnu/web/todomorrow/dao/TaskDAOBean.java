@@ -11,6 +11,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
 import com.lnu.web.todomorrow.model.Goal;
+import com.lnu.web.todomorrow.model.Note;
 import com.lnu.web.todomorrow.model.Task;
 import com.lnu.web.todomorrow.model.User;
 
@@ -35,8 +36,13 @@ public class TaskDAOBean {
 		return result;
 	}
 
+	public void removeTask(Task task) {
+		em.remove(task);
+		log("removed task " + task);
+	}
+	
 	public void updateTask(Task task){
-		//em.persist(task);
+
 		em.merge(task);
 		log("updated task " + task);
 	}
